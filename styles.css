@@ -8,7 +8,9 @@ html,body {scroll-behavior:smooth;}
 .question-card.saved.editing textarea {background:#ffffff; border-color:#00ab82;}
 .question-card.saved .progressLine {width:100%;}
 .badge.earned {animation: popIn .5s ease;}
+.admonition {animation: fadeIn .4s ease both;}
 @keyframes popIn {0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1);}}
+@keyframes fadeIn {0%{opacity:0;transform:translateY(4px)}100%{opacity:1;transform:translateY(0)}}
 /* Print styles */
 @media print {
   header, footer, #tipsPanel, #badgeContainer, #codingAssistant, #exportBtn, #resetBtn, #printSummaryBtn {display:none !important;}

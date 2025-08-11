@@ -123,13 +123,73 @@ const sections = [
   }
 ];
 
-// Category flag definitions for auto assessment scanning
-const categoryKeywords = {
-  T: ['dialect','unnatural','hard to understand','strange','wrong word','not clear','outdated','old version','cannot read','orthography','need revise'],
-  SE: ['no copy','cannot get','expensive','cost','device','app','audio','distribution','not available','need training','no awareness'],
-  S: ['not interested','fear','persecution','afraid','no desire','no hunger','pressure','family oppose','resist','reject'],
-  M: ['other language','trade language','lingua franca','mix languages','switch language','leaders choose','understand all'],
-  NI: ['fine as is','no change needed','already using everywhere','every domain','enough access']
+// Dynamic per-question guidance (admonitions)
+// type: probe | cue | reminder | watch | note
+const questionGuidance = {
+  warm_week: [
+    { type: 'probe', text: 'If answer is short: Ask about work, family, community gatherings separately.' },
+    { type: 'cue', text: 'Listen for weekly rhythm anchors (market day, worship day, farming cycle).' }
+  ],
+  warm_languages: [
+    { type: 'probe', text: 'Clarify domain: health talk vs. prayer vs. money decisions.' },
+    { type: 'watch', text: 'Note any language shifts tied to topic seriousness.' }
+  ],
+  pers_last: [
+    { type: 'probe', text: 'Ask: "Who else was present?" if not stated.' },
+    { type: 'cue', text: 'Time anchor (this week / last month / harvest season).'},
+    { type: 'reminder', text: 'Capture exact vernacular phrases showing emotion or response.' }
+  ],
+  pers_gap: [
+    { type: 'probe', text: 'If they say "nothing": Ask what fills quiet moments (radio, songs, stories).' },
+    { type: 'watch', text: 'Distinguish lack of access vs. alternative preference.' }
+  ],
+  comm_gather: [
+    { type: 'cue', text: 'Map each function → language. Record order.' },
+    { type: 'watch', text: 'Leaders switching languages mid‑sermon indicates audience adaptation.' }
+  ],
+  comm_events: [
+    { type: 'probe', text: 'Ask for most recent funeral or wedding specifically.' },
+    { type: 'reminder', text: 'Events can reveal wider social language vs. church language.' }
+  ],
+  trans_natural: [
+    { type: 'probe', text: 'Request verbatim awkward phrase: "Can you say it as you heard it?"' },
+    { type: 'cue', text: 'Tag each example: dialect / register / archaic / literal.' }
+  ],
+  trans_retell: [
+    { type: 'watch', text: 'Missing key theological relationships may indicate comprehension gap.' },
+    { type: 'reminder', text: 'Do NOT correct during retell; observe first.' }
+  ],
+  eng_access: [
+    { type: 'probe', text: 'Ask them to walk through steps physically if possible.' },
+    { type: 'watch', text: 'Latency: long pause suggests uncertainty / low awareness.' }
+  ],
+  eng_forms: [
+    { type: 'cue', text: 'Separate “seen once” vs. “regularly used”.' }
+  ],
+  eng_obstacles: [
+    { type: 'probe', text: 'For each barrier given, ask: "Who does this affect most?"' },
+    { type: 'watch', text: 'Check if barrier is structural (cost) or knowledge (where to obtain).' }
+  ],
+  spir_react: [
+    { type: 'watch', text: 'Note social cost intensity (teasing vs. exclusion vs. danger).' },
+    { type: 'cue', text: 'Record direct quotes about reactions.' }
+  ],
+  multi_reasons: [
+    { type: 'probe', text: 'If “understand better” ask: Who specifically struggles in local language?' },
+    { type: 'watch', text: 'Unexamined prestige rationale indicates awareness gap.' }
+  ],
+  wrap_change: [
+    { type: 'probe', text: 'If multiple ideas: Ask which one FIRST if they had only one resource.' },
+    { type: 'reminder', text: 'Translate this into potential intervention category later.' }
+  ]
+};
+
+const guidanceTypeMeta = {
+  probe: { label: 'Probe', color: 'border-brand-300 bg-brand-50', icon: 'M8 9h8m-8 4h5', stroke:'currentColor' },
+  cue: { label: 'Cue', color: 'border-accent-300 bg-accent-100', icon: 'M12 6v6l4 2', stroke:'currentColor' },
+  reminder: { label: 'Reminder', color: 'border-brand-400 bg-white', icon: 'M12 8v4m0 4h.01', stroke:'currentColor' },
+  watch: { label: 'Watch', color: 'border-amber-300 bg-amber-50', icon: 'M12 12a4 4 0 1 0 0-.01Z', stroke:'currentColor' },
+  note: { label: 'Note', color: 'border-slate-300 bg-slate-50', icon: 'M8 7h8v10H8z', stroke:'currentColor' }
 };
 
 const state = {
@@ -265,6 +325,11 @@ function createQuestionCard(sectionId, qObj, index) {
       return;
     }
   });
+
+  // Add focus/click listeners for dynamic guidance
+  const activateGuidance = () => updateLiveGuidance(qObj.id);
+  node.addEventListener('click', activateGuidance);
+  textarea.addEventListener('focus', activateGuidance);
 
   return node;
 }
@@ -437,11 +502,12 @@ function printableSummary(){
 // Init
 loadState();
 renderSections();
-renderTips(sections[0].id);
 restoreBadges();
 updateProgress();
 buildCategoryFlags();
 updateFinalCode();
+// Initialize live guidance for first question
+if (sections[0]?.questions[0]) updateLiveGuidance(sections[0].questions[0].id);
 
 // Restore coding state
 if (state.useLevel) useLevelSelect.value = state.useLevel;
