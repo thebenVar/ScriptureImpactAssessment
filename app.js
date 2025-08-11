@@ -511,25 +511,148 @@ helpModal?.addEventListener('keydown', e=>{
   }
 });
 
-// Init
-loadState();
-renderSections();
-restoreBadges();
-updateProgress();
-buildCategoryFlags();
-updateFinalCode();
-if (sections[0]?.questions[0]) updateLiveGuidance(sections[0].questions[0].id);
-initMobilePanel();
+// Insert missing keyword map & functionality
+const categoryKeywords = {
+  T: /(natural|awkward|word|term|literal|smooth|strange|translate|translation|meaning|king|kingdom|priest|prophet|salvation|messiah)/i,
+  SE: /(audio|app|listen|read|copy|distribution|access|available|phone|download|device|get|bought|purchase|acquire|sold|radio)/i,
+  S: /(hungry|hunger|open|openness|desire|seek|seeking|fear|resist|resistance|oppose|opposed|reaction|mock|tease|persecute|change|changed)/i,
+  M: /(language|languages|switch|switching|vernacular|local|mother|dialect|prestige|bilingual|multilingual)/i,
+  NI: /(fine|okay|normal|no problem|nothing wrong|satisfied|enough|sufficient)/i
+};
 
-// Restore coding state
-if (state.useLevel) useLevelSelect.value = state.useLevel;
-if (state.primaryCategory) primaryCategorySelect.value = state.primaryCategory;
-if (state.codingNotes) codingNotesEl.value = state.codingNotes;
+function buildCategoryFlags(){
+  if (!categoryFlagsEl) return;
+  categoryFlagsEl.innerHTML = '';
+  const cats = ['T','SE','S','M','NI'];
+  state.flags = state.flags || {};
+  cats.forEach(code => {
+    const wrapper = document.createElement('label');
+    wrapper.className = 'flex items-center gap-2 text-xs font-medium px-2 py-1.5 rounded-lg border border-brand-200 bg-white/60 hover:bg-white shadow-sm cursor-pointer';
+    wrapper.innerHTML = `<input type="checkbox" class="accent-brand-600 focus:ring-brand-500 h-3.5 w-3.5" data-cat="${code}"> <span>${code}</span>`;
+    const cb = wrapper.querySelector('input');
+    cb.checked = !!state.flags[code];
+    cb.addEventListener('change', ()=>{ state.flags[code] = cb.checked; saveState(); });
+    categoryFlagsEl.appendChild(wrapper);
+  });
+}
 
-exportBtn.addEventListener('click', exportData);
-resetBtn.addEventListener('click', resetAll);
-autoAssessBtn.addEventListener('click', autoAssess);
-printSummaryBtn.addEventListener('click', printableSummary);
+function updateFinalCode(){
+  const useLevel = state.useLevel || useLevelSelect.value;
+  const primary = state.primaryCategory || primaryCategorySelect.value;
+  let code = '--';
+  if (primary && useLevel) code = primary + useLevel;
+  finalCodeEl.textContent = code;
+}
+
+function autoAssess(){
+  // Ensure responses loaded
+  const aggregate = Object.values(state.responses || {}).join(' \n ');
+  const lower = aggregate.toLowerCase();
+  const result = {};
+  Object.entries(categoryKeywords).forEach(([cat, regex]) => {
+    result[cat] = regex.test(lower);
+  });
+  // Heuristic: if multiple true and NI also true, drop NI
+  if (result.NI){
+    const nonNITrue = Object.keys(result).some(k => k !== 'NI' && result[k]);
+    if (nonNITrue) result.NI = false;
+  }
+  state.flags = state.flags || {};
+  Object.assign(state.flags, result);
+  buildCategoryFlags();
+  saveState();
+}
+
+function awardBadge(label){
+  if (state.badges.has(label)) return;
+  state.badges.add(label);
+  const tpl = document.getElementById('badgeTemplate');
+  if (tpl && badgeContainerEl){
+    const node = tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector('.badgeLabel').textContent = label;
+    node.classList.add('earned');
+    badgeContainerEl.appendChild(node);
+    updateBadgeCount();
+  }
+  saveState();
+}
+function updateBadgeCount(){ if (badgeCountEl) badgeCountEl.textContent = state.badges.size; }
+
+function restoreBadges(){
+  if (!badgeContainerEl) return;
+  badgeContainerEl.innerHTML='';
+  (state.badges||[]).forEach(b => {
+    const tpl = document.getElementById('badgeTemplate');
+    if (!tpl) return;
+    const node = tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector('.badgeLabel').textContent = b;
+    badgeContainerEl.appendChild(node);
+  });
+  updateBadgeCount();
+}
+
+function checkXPBadges(){
+  if (state.xp >= 50) awardBadge('Insight Collector');
+  if (Object.keys(state.saved).length === Object.keys(state.responses).length && Object.keys(state.responses).length > 0) awardBadge('All Sections Complete');
+}
+
+function autoBadges(questionId, text){
+  if (!text) return;
+  const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+  if (wordCount >= 80) awardBadge('Deep Narrative');
+  if (/king|kingdom|priest|prophet|salvation|messiah/i.test(text)) awardBadge('Key Term Capture');
+  if (/language|switch|vernacular|prestige|dialect/i.test(text)) awardBadge('Language Analyst');
+  // Story Weaver: variety of sections answered
+  const answeredSections = new Set();
+  Object.keys(state.responses).forEach(id => {
+    const sec = sections.find(s => s.questions.some(q=> q.id === id));
+    if (sec) answeredSections.add(sec.id);
+  });
+  if (answeredSections.size >= 5) awardBadge('Story Weaver');
+}
+
+function exportData(){
+  const blob = new Blob([JSON.stringify({
+    responses: state.responses,
+    saved: state.saved,
+    flags: state.flags,
+    primaryCategory: primaryCategorySelect.value,
+    useLevel: useLevelSelect.value,
+    finalCode: finalCodeEl.textContent,
+    xp: state.xp,
+    badges: [...state.badges],
+    notes: codingNotesEl.value,
+    timestamp: new Date().toISOString()
+  }, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sir_conversational_export.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function resetAll(){
+  if (!confirm('Reset all data? This clears all responses and badges.')) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+function printableSummary(){
+  const win = window.open('', '_blank');
+  if (!win) return;
+  const rows = Object.entries(state.responses).map(([id, val])=>{
+    const q = sections.flatMap(s=>s.questions).find(q=> q.id===id);
+    return `<tr><td style="padding:.5rem; border:1px solid #ddd; vertical-align:top; width:25%"><strong>${q? q.q:''}</strong></td><td style="padding:.5rem; border:1px solid #ddd; white-space:pre-wrap;">${val.replace(/</g,'&lt;')}</td></tr>`;
+  }).join('');
+  win.document.write(`<html><head><title>Summary</title><style>body{font-family:Inter,Arial,sans-serif;font-size:12px;line-height:1.4} table{border-collapse:collapse;width:100%;} h1{font-size:16px;margin:0 0 1rem} .meta{margin:.5rem 0 1rem;font-size:11px;color:#555}</style></head><body><h1>Interview Summary</h1><div class='meta'>Final Code: ${finalCodeEl.textContent} | XP: ${state.xp} | Badges: ${[...state.badges].join(', ')}</div><table>${rows}</table></body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=> win.print(), 300);
+}
+
+// Hook final code updates when selectors change
+useLevelSelect?.addEventListener('change', ()=> { state.useLevel = useLevelSelect.value; updateFinalCode(); saveState(); });
+primaryCategorySelect?.addEventListener('change', ()=> { state.primaryCategory = primaryCategorySelect.value; updateFinalCode(); saveState(); });
 
 // Accessibility: keyboard shortcuts
 window.addEventListener('keydown', e=>{
@@ -543,3 +666,27 @@ primaryCategorySelect.addEventListener('change', ()=> { state.primaryCategory = 
 codingNotesEl.addEventListener('input', ()=> { state.codingNotes = codingNotesEl.value; saveState(); });
 
 console.log('SIR Conversational Survey App Initialized');
+
+// Initialization (restore state, render UI, bind events)
+(function init(){
+  loadState();
+  renderSections();
+  buildCategoryFlags();
+  restoreBadges();
+  // Restore coding panel values
+  if (state.useLevel) { useLevelSelect.value = state.useLevel; }
+  if (state.primaryCategory) { primaryCategorySelect.value = state.primaryCategory; }
+  if (state.codingNotes) { codingNotesEl.value = state.codingNotes; }
+  updateFinalCode();
+  xpValueEl.textContent = state.xp;
+  updateProgress();
+  // Bind buttons
+  exportBtn?.addEventListener('click', exportData);
+  resetBtn?.addEventListener('click', resetAll);
+  autoAssessBtn?.addEventListener('click', autoAssess);
+  printSummaryBtn?.addEventListener('click', printableSummary);
+  initMobilePanel();
+  // If there is at least one question, load its guidance initially
+  const firstQ = sections[0]?.questions[0]?.id;
+  if (firstQ) updateLiveGuidance(firstQ);
+})();

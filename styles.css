@@ -1,5 +1,12 @@
 /* Custom enhancements beyond Tailwind */
 html,body {scroll-behavior:smooth;}
+/* Sidebar custom scroll */
+#sidebar {scrollbar-width: thin; scrollbar-color: #80dfcb #e0f7f4;}
+#sidebar::-webkit-scrollbar {width:8px;}
+#sidebar::-webkit-scrollbar-track {background:#e0f7f4; border-radius:8px;}
+#sidebar::-webkit-scrollbar-thumb {background:#80dfcb; border-radius:8px;}
+#sidebar::-webkit-scrollbar-thumb:hover {background:#33c5a3;}
+
 .question-card.collapsed .response-area {display:none;}
 .question-card.collapsed .progressLine {width:0 !important;}
 .question-card.saved {outline:2px solid #00ab82; outline-offset:2px;}
