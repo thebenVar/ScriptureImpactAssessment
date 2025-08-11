@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Scriptre Impact Research</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['Inter','ui-sans-serif','system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
+          colors: { brand: {50:'#f5fbfa',100:'#e0f7f4',200:'#b3ebe0',300:'#80dfcb',400:'#33c5a3',500:'#00ab82',600:'#008c6b',700:'#006d54',800:'#004f3d',900:'#003d2f',950:'#00261d'} }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="h-full bg-gradient-to-br from-brand-50 via-white to-brand-100 font-body text-slate-800">
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1 flex items-center justify-center px-4 py-10">
+      <div class="w-full max-w-sm mx-auto">
+        <div class="mb-8 text-center">
+          <div class="mx-auto h-14 w-14 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-600/30">SIR</div>
+          <h1 class="mt-4 text-xl font-semibold tracking-tight text-brand-800">Sign in</h1>
+          <p class="text-xs text-slate-500 mt-1">Authorized access required</p>
+        </div>
+        <form id="loginForm" class="space-y-5 bg-white/80 backdrop-blur border border-brand-100 shadow-lg shadow-brand-900/5 rounded-2xl p-6">
+          <div class="space-y-1">
+            <label for="username" class="text-xs font-medium text-slate-600">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" required class="w-full rounded-lg border-brand-200 focus:border-brand-400 focus:ring-brand-400 text-sm bg-white/70" placeholder="Enter username" />
+          </div>
+          <div class="space-y-1">
+            <label for="password" class="text-xs font-medium text-slate-600">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-lg border-brand-200 focus:border-brand-400 focus:ring-brand-400 text-sm bg-white/70" placeholder="Enter password" />
+          </div>
+          <div class="flex items-center justify-between">
+            <label class="inline-flex items-center gap-2 text-[11px] text-slate-600">
+              <input id="showPassword" type="checkbox" class="h-3.5 w-3.5 rounded border-brand-300 text-brand-600 focus:ring-brand-500" />
+              <span>Show password</span>
+            </label>
+            <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-400">
+              <span>Login</span>
+            </button>
+          </div>
+          <p id="errorMsg" class="hidden text-[11px] text-red-600 font-medium"></p>
+        </form>
+        <p class="mt-6 text-[11px] text-slate-500 text-center">&copy; 2025 Scriptre Impact Research Toolkit</p>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Redirect if already authenticated
+    if(localStorage.getItem('sir_auth_v1')){
+      window.location.replace('index.html');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <script>
+    // Use global dcodeIO.bcrypt from UMD build
+    const bcrypt = window.dcodeIO?.bcrypt;
+    if(!bcrypt){
+      console.error('bcrypt failed to load');
+    }
+    const USER = 'admin';
+    const PLAINTEXT = 'loGos&1988'; // updated password
+    // Hash at runtime (placeholder until server-side store)
+    const HASH = bcrypt ? bcrypt.hashSync(PLAINTEXT, 8) : PLAINTEXT;
+
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const showPassword = document.getElementById('showPassword');
+    const pwdInput = document.getElementById('password');
+
+    showPassword.addEventListener('change', ()=>{
+      pwdInput.type = showPassword.checked ? 'text' : 'password';
+    });
+
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      errorMsg.classList.add('hidden');
+      const u = form.username.value.trim();
+      const p = form.password.value;
+      if(u !== USER){
+        errorMsg.textContent = 'Invalid credentials.';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+      let ok = false;
+      if (bcrypt){
+        ok = bcrypt.compareSync(p, HASH);
+      } else {
+        ok = (p === PLAINTEXT);
+      }
+      if(!ok){
+        errorMsg.textContent = 'Invalid credentials.';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+      localStorage.setItem('sir_auth_v1', JSON.stringify({ user: USER, ts: Date.now() }));
+      window.location.replace('index.html');
+    });
+  </script>
+</body>
+</html>
