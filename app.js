@@ -401,6 +401,69 @@ function updateLiveGuidance(questionId){
   }
 }
 
+function updateProgress() {
+  // Sync progress ring and percent display
+  const totalQuestions = Object.keys(state.saved).length;
+  const answeredQuestions = Object.keys(state.saved).filter(k => state.saved[k]).length;
+  const progressPercentValue = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+  progressRing.style.background = `conic-gradient(from -90deg, #3b82f6 ${progressPercentValue}%, #e5e7eb ${progressPercentValue}% 100%)`;
+  progressPercent.textContent = Math.round(progressPercentValue) + '%';
+
+  // Sync mobile XP if panel open
+  const mobileXPValue = document.getElementById('mobileXPValue');
+  if (mobileXPValue) mobileXPValue.textContent = state.xp;
+}
+
+function awardXP(amount){
+  state.xp += amount;
+  xpValueEl.textContent = state.xp;
+  const mobileXPValue = document.getElementById('mobileXPValue');
+  if (mobileXPValue) mobileXPValue.textContent = state.xp;
+  checkXPBadges();
+}
+
+// Mobile off-canvas handling
+function initMobilePanel(){
+  const btn = document.getElementById('mobileMenuBtn');
+  const panel = document.getElementById('mobilePanel');
+  const overlay = document.getElementById('mobileOverlay');
+  const closeBtn = document.getElementById('closeMobilePanel');
+  const content = document.getElementById('mobilePanelContent');
+  const exportBtnMobile = document.getElementById('mobileExport');
+  const assessBtnMobile = document.getElementById('mobileAssess');
+  if (!btn || !panel) return;
+
+  function populate(){
+    content.innerHTML = '';
+    // Clone Live Guidance
+    const guidance = document.getElementById('guidanceSection')?.cloneNode(true);
+    if (guidance){ guidance.id='guidanceSectionMobile'; content.appendChild(guidance); }
+    // Clone Badges
+    const badges = document.getElementById('badgesSection')?.cloneNode(true);
+    if (badges){ badges.id='badgesSectionMobile'; content.appendChild(badges); }
+    // Clone Coding Assistant
+    const coding = document.getElementById('codingSection')?.cloneNode(true);
+    if (coding){ coding.id='codingSectionMobile'; content.appendChild(coding); }
+  }
+
+  function open(){
+    populate();
+    panel.classList.add('show');
+    document.body.classList.add('overflow-hidden');
+  }
+  function close(){
+    panel.classList.remove('show');
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  btn.addEventListener('click', open);
+  overlay.addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
+  exportBtnMobile.addEventListener('click', ()=> { exportData(); close(); });
+  assessBtnMobile.addEventListener('click', ()=> { autoAssess(); close(); });
+  window.addEventListener('keydown', e=> { if (e.key==='Escape' && panel.classList.contains('show')) close(); });
+}
+
 // Init
 loadState();
 renderSections();
@@ -409,6 +472,7 @@ updateProgress();
 buildCategoryFlags();
 updateFinalCode();
 if (sections[0]?.questions[0]) updateLiveGuidance(sections[0].questions[0].id);
+initMobilePanel();
 
 // Restore coding state
 if (state.useLevel) useLevelSelect.value = state.useLevel;

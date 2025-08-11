@@ -9,11 +9,17 @@ html,body {scroll-behavior:smooth;}
 .question-card.saved .progressLine {width:100%;}
 .badge.earned {animation: popIn .5s ease;}
 .admonition {animation: fadeIn .4s ease both;}
+#mobilePanel.show {display:block;}
+#mobilePanel .translate-enter {transform:translateX(100%);} /* placeholder for potential transitions */
 @keyframes popIn {0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1);}}
 @keyframes fadeIn {0%{opacity:0;transform:translateY(4px)}100%{opacity:1;transform:translateY(0)}}
+/* Narrow screen adjustments */
+@media (max-width: 640px) {
+  .question-card {box-shadow:0 2px 4px -2px rgba(0,0,0,.08),0 4px 12px -2px rgba(0,0,0,.05);}  
+}
 /* Print styles */
 @media print {
-  header, footer, #tipsPanel, #badgeContainer, #codingAssistant, #exportBtn, #resetBtn, #printSummaryBtn {display:none !important;}
+  header, footer, #tipsPanel, #badgeContainer, #codingAssistant, #exportBtn, #resetBtn, #printSummaryBtn, #mobileMenuBtn, #mobilePanel {display:none !important;}
   body {background:white !important;}
   .question-card {page-break-inside:avoid;}
   textarea {border:none !important; box-shadow:none !important;}
