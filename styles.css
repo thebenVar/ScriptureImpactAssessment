@@ -3,6 +3,9 @@ html,body {scroll-behavior:smooth;}
 .question-card.collapsed .response-area {display:none;}
 .question-card.collapsed .progressLine {width:0 !important;}
 .question-card.saved {outline:2px solid #00ab82; outline-offset:2px;}
+.question-card.saved textarea {background:#f0fdfa; border-color:#b3ebe0; color:#064e3b; cursor:default;}
+.question-card.saved:not(.editing) textarea:focus {outline:none; box-shadow:none;}
+.question-card.saved.editing textarea {background:#ffffff; border-color:#00ab82;}
 .question-card.saved .progressLine {width:100%;}
 .badge.earned {animation: popIn .5s ease;}
 @keyframes popIn {0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1);}}

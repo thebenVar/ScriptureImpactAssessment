@@ -199,11 +199,19 @@ function createQuestionCard(sectionId, qObj, index) {
     updateWordCount();
     if (state.saved[qObj.id]) {
       node.classList.add('saved');
+      textarea.readOnly = true;
+      saveBtn.textContent = 'Edit';
+      saveBtn.setAttribute('aria-label','Edit answer');
       progressLine.style.width = '100%';
     }
   }
 
   textarea.addEventListener('input', ()=> {
+    // Prevent accidental edits unless editing mode explicitly enabled
+    if (node.classList.contains('saved') && !node.classList.contains('editing')) {
+      textarea.blur();
+      return;
+    }
     state.responses[qObj.id] = textarea.value;
     updateWordCount();
     autoBadges(qObj.id, textarea.value);
@@ -222,13 +230,39 @@ function createQuestionCard(sectionId, qObj, index) {
   }
 
   saveBtn.addEventListener('click', ()=>{
+    // First time save
     if (!state.saved[qObj.id]) {
       state.saved[qObj.id] = true;
       awardXP(10);
       node.classList.add('saved');
+      textarea.readOnly = true;
+      saveBtn.textContent = 'Edit';
+      saveBtn.setAttribute('aria-label','Edit answer');
       badgeHint.classList.add('opacity-0');
       updateProgress();
       saveState();
+      return;
+    }
+    // If already saved and not currently editing -> enter edit mode
+    if (state.saved[qObj.id] && !node.classList.contains('editing')) {
+      node.classList.add('editing');
+      textarea.readOnly = false;
+      saveBtn.textContent = 'Save';
+      saveBtn.setAttribute('aria-label','Save updated answer');
+      // Focus at end
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+      return;
+    }
+    // If in editing mode -> save updates
+    if (node.classList.contains('editing')) {
+      state.responses[qObj.id] = textarea.value;
+      textarea.readOnly = true;
+      node.classList.remove('editing');
+      saveBtn.textContent = 'Edit';
+      saveBtn.setAttribute('aria-label','Edit answer');
+      saveState();
+      return;
     }
   });
 
