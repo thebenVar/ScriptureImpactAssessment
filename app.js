@@ -356,147 +356,49 @@ function renderSections() {
 }
 
 function renderTips(initialSectionId) {
-  tipsPanelEl.innerHTML = '';
-  const section = sections.find(s=>s.id===initialSectionId) || sections[0];
-  section.tips.forEach(t=> addTip(t));
+  // Legacy no-op (dynamic guidance replaces static tips)
 }
 
-function addTip(text) {
+function buildAdmonition(item){
+  const meta = guidanceTypeMeta[item.type] || guidanceTypeMeta.note;
   const div = document.createElement('div');
-  div.className = 'p-3 rounded-lg bg-white border border-brand-100 shadow-sm text-xs flex gap-2';
-  div.innerHTML = `<svg class='w-4 h-4 text-brand-500 shrink-0' fill='none' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' d='M12 17v.01M12 7v6m9 5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'/></svg><span>${text}</span>`;
-  tipsPanelEl.appendChild(div);
+  div.className = `admonition relative p-3 pl-3.5 rounded-lg border text-xs flex gap-2 items-start ${meta.color}`;
+  div.innerHTML = `<div class='mt-0.5 text-brand-600'><svg class='w-4 h-4' fill='none' stroke='${meta.stroke}' stroke-width='2' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' d='${meta.icon}'/></svg></div><div class='flex-1 leading-relaxed'><span class='font-semibold mr-1 uppercase tracking-wide text-[10px] opacity-70'>${meta.label}:</span>${item.text}</div>`;
+  return div;
 }
 
-function updateProgress() {
-  const totalQuestions = sections.reduce((sum, s)=> sum + s.questions.length, 0);
-  const savedCount = Object.keys(state.saved).length;
-  const percent = Math.round((savedCount / totalQuestions) * 100);
-  const circumference = 2 * Math.PI * 44; // r=44 from SVG
-  progressRing.style.strokeDashoffset = (circumference - (percent/100)*circumference).toFixed(2);
-  progressPercent.textContent = percent + '%';
-  badgeCountEl.textContent = state.badges.size;
-  // Section progress: current scanning could be by viewport - simple approach picks first incomplete section
-  const nextSection = sections.find(s => s.questions.some(q=> !state.saved[q.id]));
-  if (nextSection) {
-    sectionTitleEl.textContent = nextSection.title;
-    const totalInSection = nextSection.questions.length;
-    const savedInSection = nextSection.questions.filter(q=> state.saved[q.id]).length;
-    const frac = (savedInSection / totalInSection) * 100;
-    sectionProgressEl.style.width = frac + '%';
+function updateLiveGuidance(questionId){
+  if (!tipsPanelEl) return;
+  tipsPanelEl.innerHTML = '';
+  const guidance = questionGuidance[questionId] || [];
+  if (guidance.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'text-[11px] text-slate-500 italic';
+    empty.textContent = 'No specific guidance for this question. Use core interviewing principles.';
+    tipsPanelEl.appendChild(empty);
   } else {
-    sectionTitleEl.textContent = 'All Complete';
-    sectionProgressEl.style.width = '100%';
-    awardBadge('All Sections Complete');
+    guidance.forEach(g => tipsPanelEl.appendChild(buildAdmonition(g)));
   }
-}
-
-function awardXP(amount){
-  state.xp += amount;
-  xpValueEl.textContent = state.xp;
-  checkXPBadges();
-}
-
-function checkXPBadges(){
-  if (state.xp >= 50) awardBadge('Story Weaver');
-  if (state.xp >= 100) awardBadge('Insight Collector');
-  if (state.xp >= 200) awardBadge('Master Interviewer');
-}
-
-function awardBadge(label){
-  if (state.badges.has(label)) return;
-  state.badges.add(label);
-  const tpl = document.getElementById('badgeTemplate');
-  const node = tpl.content.firstElementChild.cloneNode(true);
-  node.classList.add('earned');
-  node.querySelector('.badgeLabel').textContent = label;
-  badgeContainerEl.appendChild(node);
-  saveState();
-  updateProgress();
-}
-
-function restoreBadges(){
-  state.badges.forEach(label=> awardBadge(label));
-}
-
-function autoBadges(questionId, text){
-  if (text.split(/\s+/).filter(Boolean).length >= 80) awardBadge('Deep Narrative');
-  if (/\bking(dom)?\b/i.test(text) && /salvation/i.test(text)) awardBadge('Key Term Capture');
-  if (/\b(phone|audio|app)\b/i.test(text)) awardBadge('Media Mapper');
-  if (questionId.startsWith('multi_') && /why/i.test(text)) awardBadge('Language Analyst');
-}
-
-function buildCategoryFlags(){
-  ['T','SE','S','M','NI'].forEach(cat=>{
-    const wrapper = document.createElement('label');
-    wrapper.className = 'flex items-center gap-2 p-2 rounded-lg border border-brand-200 bg-white/70 text-xs font-medium cursor-pointer hover:shadow';
-    wrapper.innerHTML = `<input type='checkbox' data-cat='${cat}' class='h-4 w-4 text-brand-600 focus:ring-brand-500 rounded'/> <span>${cat}</span>`;
-    categoryFlagsEl.appendChild(wrapper);
-  });
-  categoryFlagsEl.addEventListener('change', updateFinalCode);
-  useLevelSelect.addEventListener('change', updateFinalCode);
-  primaryCategorySelect.addEventListener('change', updateFinalCode);
-  codingNotesEl.addEventListener('input', saveState);
-}
-
-function updateFinalCode(){
-  const useLevel = useLevelSelect.value;
-  const primary = primaryCategorySelect.value;
-  finalCodeEl.textContent = (useLevel && primary) ? `${useLevel}${primary}` : '--';
-  saveState();
-}
-
-function autoAssess(){
-  const combined = Object.values(state.responses).join('\n').toLowerCase();
-  const detected = [];
-  Object.entries(categoryKeywords).forEach(([cat, kws])=>{
-    if (kws.some(kw=> combined.includes(kw))) detected.push(cat);
-  });
-  // set checkboxes
-  document.querySelectorAll('#categoryFlags input[type=checkbox]').forEach(cb=>{
-    cb.checked = detected.includes(cb.dataset.cat);
-  });
-  // naive use level heuristic
-  const usageSignals = (combined.match(/every week|each week|daily|everywhere/g)||[]).length;
-  const rareSignals = (combined.match(/rare|hardly|never|cannot recall/g)||[]).length;
-  let level = '';
-  if (rareSignals>1) level = '1'; else if (usageSignals>=3) level='4'; else if (usageSignals===2) level='3'; else if (usageSignals===1) level='2';
-  useLevelSelect.value = level;
-  // Choose primary: precedence T > S > SE > M > NI if detected
-  const precedence = ['T','S','SE','M','NI'];
-  primaryCategorySelect.value = precedence.find(p=> detected.includes(p)) || '';
-  updateFinalCode();
-}
-
-function exportData(){
-  const data = {
-    timestamp: new Date().toISOString(),
-    responses: state.responses,
-    saved: state.saved,
-    xp: state.xp,
-    badges: [...state.badges],
-    code: finalCodeEl.textContent,
-    notes: codingNotesEl.value,
-    useLevel: useLevelSelect.value,
-    primaryCategory: primaryCategorySelect.value
-  };
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'sir_conversational_export_'+Date.now()+'.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function resetAll(){
-  if (!confirm('Reset all data? This cannot be undone.')) return;
-  localStorage.removeItem(LS_KEY);
-  location.reload();
-}
-
-function printableSummary(){
-  window.print();
+  // Append collapsible section tips
+  const section = sections.find(sec => sec.questions.some(q=> q.id === questionId));
+  if (section) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mt-3 space-y-2';
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'w-full flex items-center justify-between text-[11px] font-semibold tracking-wide text-brand-700 bg-white/70 px-2 py-1 rounded border border-brand-100 hover:bg-white transition';
+    header.innerHTML = `<span>Section Tips: ${section.title}</span><span class='toggle ml-2 text-slate-400 transition-transform'>&#9662;</span>`;
+    const list = document.createElement('div');
+    list.className = 'mt-2 space-y-2';
+    section.tips.forEach(t=> list.appendChild(buildAdmonition({type:'note', text:t})) );
+    header.addEventListener('click', ()=>{
+      list.classList.toggle('hidden');
+      header.querySelector('.toggle').classList.toggle('rotate-180');
+    });
+    wrapper.appendChild(header);
+    wrapper.appendChild(list);
+    tipsPanelEl.appendChild(wrapper);
+  }
 }
 
 // Init
@@ -506,7 +408,6 @@ restoreBadges();
 updateProgress();
 buildCategoryFlags();
 updateFinalCode();
-// Initialize live guidance for first question
 if (sections[0]?.questions[0]) updateLiveGuidance(sections[0].questions[0].id);
 
 // Restore coding state
