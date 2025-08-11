@@ -220,6 +220,10 @@ const finalCodeEl = document.getElementById('finalCode');
 const codingNotesEl = document.getElementById('codingNotes');
 const printSummaryBtn = document.getElementById('printSummaryBtn');
 const badgeCountEl = document.getElementById('badgeCount');
+const helpBtn = document.getElementById('helpBtn');
+const helpModal = document.getElementById('helpModal');
+const closeHelpBtn = document.getElementById('closeHelp');
+let lastFocusedBeforeHelp = null;
 
 const LS_KEY = 'sir_conversational_survey_v1';
 
@@ -463,6 +467,49 @@ function initMobilePanel(){
   assessBtnMobile.addEventListener('click', ()=> { autoAssess(); close(); });
   window.addEventListener('keydown', e=> { if (e.key==='Escape' && panel.classList.contains('show')) close(); });
 }
+
+// Help modal handling
+function openHelp(){
+  if (!helpModal) return;
+  lastFocusedBeforeHelp = document.activeElement;
+  helpModal.classList.remove('hidden');
+  // Focus first heading
+  const heading = helpModal.querySelector('#helpTitle');
+  if (heading) heading.focus({preventScroll:true});
+  document.body.classList.add('overflow-hidden');
+}
+function closeHelp(){
+  if (!helpModal) return;
+  helpModal.classList.add('hidden');
+  document.body.classList.remove('overflow-hidden');
+  if (lastFocusedBeforeHelp) lastFocusedBeforeHelp.focus();
+}
+if (helpBtn){
+  helpBtn.addEventListener('click', openHelp);
+}
+if (closeHelpBtn){
+  closeHelpBtn.addEventListener('click', closeHelp);
+}
+window.addEventListener('keydown', e=>{
+  if (e.key==='Escape' && helpModal && !helpModal.classList.contains('hidden')) closeHelp();
+});
+
+// Trap focus inside modal when open
+helpModal?.addEventListener('keydown', e=>{
+  if (e.key !== 'Tab') return;
+  const focusable = helpModal.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+  const list = Array.from(focusable).filter(el => !el.hasAttribute('disabled'));
+  if (list.length === 0) return;
+  const first = list[0];
+  const last = list[list.length -1];
+  if (e.shiftKey && document.activeElement === first){
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last){
+    e.preventDefault();
+    first.focus();
+  }
+});
 
 // Init
 loadState();

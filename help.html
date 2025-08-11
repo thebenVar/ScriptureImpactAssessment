@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help & Reference - Scriptre Impact Research Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors:{ brand:{50:'#f5fbfa',100:'#e0f7f4',200:'#b3ebe0',300:'#80dfcb',400:'#33c5a3',500:'#00ab82',600:'#008c6b',700:'#006d54',800:'#004f3d',900:'#003d2f',950:'#00261d'}, accent:{100:'#fff7e6',200:'#ffe7b3',300:'#ffd580',400:'#ffc24d',500:'#ffad1a',600:'#e68f00',700:'#b36e00',800:'#805000',900:'#4d3000'} }, fontFamily:{ display:['Inter','ui-sans-serif','system-ui'], body:['Inter','ui-sans-serif','system-ui'] } } }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="h-full bg-gradient-to-br from-brand-50 via-white to-brand-100 font-body text-slate-800">
+  <div class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-20 backdrop-blur bg-white/80 border-b border-brand-100">
+      <div class="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="index.html" class="inline-flex items-center gap-2 text-brand-700 font-semibold group">
+          <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center text-sm font-bold shadow">SIR</div>
+          <span class="text-sm group-hover:underline">Back to Survey</span>
+        </a>
+        <h1 class="ml-auto text-base sm:text-lg font-semibold tracking-tight text-brand-800">Help & Reference</h1>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 py-8 space-y-10 prose prose-sm sm:prose base:prose-slate">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>The Scriptre Impact Research Survey tool helps field workers capture <strong>narrative evidence</strong> about how Scripture is accessed, used, and influencing a language community. It emphasizes concrete recent stories over opinions and couples them with a light coding layer for rapid situational classification.</p>
+      </section>
+
+      <section id="sections">
+        <h2>Survey Sections</h2>
+        <ul>
+          <li><strong>Warm Up & Rapport</strong>: Establish context of daily life and language domains.</li>
+          <li><strong>Personal Scripture Experience</strong>: Individual encounters, barriers, and motivators.</li>
+          <li><strong>Community & Church Use</strong>: Corporate patterns, roles, and domain breadth.</li>
+          <li><strong>Translation Experience (T)</strong>: Naturalness, clarity, key terms, trust.</li>
+          <li><strong>Access & Engagement (SE)</strong>: Availability of formats, acquisition, usage pathways.</li>
+          <li><strong>Spiritual Climate (S)</strong>: Openness, social reactions, hunger or decline.</li>
+          <li><strong>Language Choices (M)</strong>: Multilingual dynamics and inclusion/exclusion effects.</li>
+          <li><strong>Wrap-Up & Reflection</strong>: Prioritized change levers and perceived gaps.</li>
+        </ul>
+      </section>
+
+      <section id="live-guidance">
+        <h2>Live Guidance System</h2>
+        <p>When you focus or click a question, the right sidebar updates with <em>contextual micro-prompts</em>:</p>
+        <ul>
+          <li><strong>Probe</strong>: Deepen or clarify with more story detail.</li>
+          <li><strong>Cue</strong>: Remind you to watch for time, actors, domains.</li>
+          <li><strong>Watch</strong>: Potential analytic signal or risk (e.g., social cost).</li>
+          <li><strong>Reminder</strong>: Process guidance (verbatim capture, neutrality).</li>
+          <li><strong>Note</strong>: General section-level emphasis.</li>
+        </ul>
+        <p>If no guidance appears, default to core interviewing: recent concrete events, who/when/where, emotional tone, consequences, language used.</p>
+      </section>
+
+      <section id="badges">
+        <h2>Badges & XP</h2>
+        <p>Badges gently encourage thorough, balanced interviewing. XP (+10) is granted on the first save of each question. Example badges (your version may include more):</p>
+        <table>
+          <thead><tr><th>Badge</th><th>Trigger Concept</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Deep Narrative</td><td>Long detailed saved response (word count threshold)</td><td>Encourages rich stories not bullet summaries.</td></tr>
+            <tr><td>Key Term Capture</td><td>Multiple key translation terms noted</td><td>Promotes lexical precision.</td></tr>
+            <tr><td>Language Analyst</td><td>Multiple multilingual dynamics captured</td><td>Ensures mapping of function → language.</td></tr>
+            <tr><td>Story Weaver</td><td>Coverage across many sections</td><td>Balanced domain exploration.</td></tr>
+            <tr><td>Insight Collector</td><td>High XP total (many saved responses)</td><td>Completion momentum.</td></tr>
+            <tr><td>All Sections Complete</td><td>Every question saved</td><td>Signals dataset readiness.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="matrix-coding">
+        <h2>Matrix Coding</h2>
+        <p>The coding assistant helps you translate qualitative narratives into a concise situational profile.</p>
+        <h3>Categories</h3>
+        <ul>
+          <li><strong>T (Translation)</strong>: Naturalness, clarity, comprehension, key term semantics, trust.</li>
+          <li><strong>SE (Scripture Engagement)</strong>: Awareness, access channels, distribution, formats, literacy constraints.</li>
+          <li><strong>S (Spiritual Climate)</strong>: Openness, appetite, resistance, social reaction patterns.</li>
+          <li><strong>M (Multilingual Dynamics)</strong>: Language choice patterns, inclusion/exclusion, prestige functions.</li>
+          <li><strong>NI (No Issues)</strong>: No prominent constraints; equilibrium state.</li>
+        </ul>
+        <h3>Use Level (1–4)</h3>
+        <ol>
+          <li><strong>Level 1</strong>: Rare / isolated vernacular Scripture use.</li>
+          <li><strong>Level 2</strong>: Occasional; limited domains; some enthusiasm.</li>
+          <li><strong>Level 3</strong>: Regular in key domains; emerging normalization.</li>
+          <li><strong>Level 4</strong>: Integrated across personal, corporate, and informal settings.</li>
+        </ol>
+        <p><strong>Primary Code</strong> = Category + Use Level (e.g., SE3). Choose the category exerting greatest leverage on change or representing chief constraint/opportunity.</p>
+        <h3>Auto Assess Logic (Simplified)</h3>
+        <p>The algorithm scans saved responses for keyword clusters per category. It suggests flags; you validate. Heuristic precedence prioritizes material transformation issues: T > S > SE > M > NI when equal signals occur. Always override if narrative weight differs.</p>
+      </section>
+
+      <section id="ethics">
+        <h2>Interview Ethics & Quality</h2>
+        <ul>
+          <li>Obtain consent; explain purpose and local data handling.</li>
+          <li>Neutral reinforcement: say "Thank you" not value judgments.</li>
+          <li>Capture near‑term recent events (past week/month) before historical shifts.</li>
+          <li>Prefer verbatim wording; mark emotional or metaphor phrases.</li>
+          <li>Avoid stacking questions; one probe at a time.</li>
+          <li>Respect fatigue; offer pause or stop without penalty.</li>
+        </ul>
+      </section>
+
+      <section id="privacy">
+        <h2>Data Handling</h2>
+        <p>All entries remain in <strong>local browser storage</strong> until you export. Clear with the Reset function on shared devices. Exported JSON contains raw narrative + coding meta; remove identifying phrases before wider sharing if necessary.</p>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+        <p><strong>Why lock answers after save?</strong> To prevent accidental overwrites while scrolling or probing. Click Edit to refine.</p>
+        <p><strong>What if Auto Assess seems wrong?</strong> Manual judgment prevails. Adjust flags, primary category, or Use Level as needed.</p>
+        <p><strong>Can I import previous data?</strong> Current version supports only on-device capture then export; import may be added later.</p>
+      </section>
+    </main>
+
+    <footer class="mt-8 border-t border-brand-100 bg-white/70 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-4 py-6 text-xs text-slate-500 flex flex-wrap items-center gap-4">
+        <span>&copy; 2025 Scriptre Impact Research Toolkit</span>
+        <span class="hidden sm:inline">|</span>
+        <span>All content stored locally until exported</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
