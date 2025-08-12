@@ -201,6 +201,9 @@ const state = {
   tipsIndex: {},
 };
 
+// Sequential counter for visible question numbers
+let questionCounter = 0;
+
 // Elements
 const questionnaireEl = document.getElementById('questionnaire');
 const tipsPanelEl = document.getElementById('tipsPanel');
@@ -242,12 +245,23 @@ function saveState() {
   localStorage.setItem(LS_KEY, JSON.stringify(toSave));
 }
 
-function createQuestionCard(sectionId, qObj, index) {
+function createQuestionCard(sectionId, qObj, index, order) {
   const tpl = document.getElementById('questionTemplate');
   const node = tpl.content.firstElementChild.cloneNode(true);
   node.dataset.questionId = qObj.id;
+  node.id = 'q_' + qObj.id; // anchor id
   node.querySelector('.question-title').textContent = qObj.q;
   node.querySelector('.question-help').textContent = qObj.help || '';
+  // Visible number in circle + ID chip
+  const circle = node.querySelector('.shrink-0');
+  if (circle) circle.textContent = order || '';
+  const titleEl = node.querySelector('.question-title');
+  if (titleEl) {
+    const idChip = document.createElement('span');
+    idChip.className = 'ml-2 align-middle inline-block px-1.5 py-0.5 rounded bg-brand-100 text-brand-700 font-mono text-[10px] tracking-tight border border-brand-200';
+    idChip.textContent = qObj.id;
+    titleEl.after(idChip);
+  }
   node.querySelector('.collapseBtn').addEventListener('click',()=>{
     node.classList.toggle('collapsed');
   });
@@ -353,7 +367,7 @@ function renderSections() {
 
     const list = document.createElement('div');
     list.className = 'space-y-5';
-    section.questions.forEach((q,i)=> list.appendChild(createQuestionCard(section.id,q,i)) );
+    section.questions.forEach((q,i)=> { questionCounter++; list.appendChild(createQuestionCard(section.id,q,i,questionCounter)); });
     sectionContainer.appendChild(list);
     questionnaireEl.appendChild(sectionContainer);
   });
