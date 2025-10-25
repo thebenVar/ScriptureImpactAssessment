@@ -1,20 +1,22 @@
 {
+  "buildCommand": null,
+  "outputDirectory": "app",
   "rewrites": [
     {
       "source": "/login",
-      "destination": "/app/pages/login.html"
+      "destination": "/pages/login.html"
     },
     {
       "source": "/help",
-      "destination": "/app/pages/help.html"
+      "destination": "/pages/help.html"
     },
     {
       "source": "/coming-soon",
-      "destination": "/app/pages/coming-soon.html"
+      "destination": "/pages/coming-soon.html"
     },
     {
       "source": "/survey-pdf",
-      "destination": "/app/pages/survey-pdf.html"
+      "destination": "/pages/survey-pdf.html"
     }
   ],
   "headers": [
