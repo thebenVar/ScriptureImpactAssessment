@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
   <script>
     // Simple auth guard
     if(!localStorage.getItem('sir_auth_v1')){
@@ -114,7 +114,7 @@
                 </svg>
                 View PDF Version
               </a>
-              <a href="../assets/Scripture Impact Assessment Survey - PDF Version.pdf" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-accent-50 text-accent-700 border border-accent-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
+              <a href="/assets/Scripture Impact Assessment Survey - PDF Version.pdf" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-accent-50 text-accent-700 border border-accent-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
@@ -245,7 +245,7 @@
           <button id="mobileExport" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 shadow">Export</button>
           <button id="mobileAssess" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-slate-900 text-sm font-medium py-2 shadow">Auto Assess</button>
         </div>
-        <a href="../../output/survey-pdf.html" target="_blank" class="w-full inline-flex justify-center items-center gap-2 rounded-lg border-2 border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-sm font-medium py-2 shadow-sm transition">
+        <a href="survey-pdf.html" target="_blank" class="w-full inline-flex justify-center items-center gap-2 rounded-lg border-2 border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-sm font-medium py-2 shadow-sm transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
@@ -361,7 +361,7 @@
       <span class="badgeLabel"></span>
     </div>
   </template>
-  <script src="../js/app.js"></script>
+  <script src="/js/app.js"></script>
   <script>
     // Attach logout handler after module load
     document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
