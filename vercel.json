@@ -4,19 +4,19 @@
   "rewrites": [
     {
       "source": "/login",
-      "destination": "/pages/login.html"
+      "destination": "/login.html"
     },
     {
       "source": "/help",
-      "destination": "/pages/help.html"
+      "destination": "/help.html"
     },
     {
       "source": "/coming-soon",
-      "destination": "/pages/coming-soon.html"
+      "destination": "/coming-soon.html"
     },
     {
       "source": "/survey-pdf",
-      "destination": "/pages/survey-pdf.html"
+      "destination": "/survey-pdf.html"
     }
   ],
   "headers": [
