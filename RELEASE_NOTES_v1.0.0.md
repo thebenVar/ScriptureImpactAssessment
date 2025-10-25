@@ -124,5 +124,5 @@ This release represents a fully functional, professionally organized survey tool
 
 ---
 
-**Copyright © 2025 CBASE**  
+**Copyright © 2025 NLCI/PBT**  
 **Developed for Scripture Impact Research**

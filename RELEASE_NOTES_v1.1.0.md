@@ -91,5 +91,5 @@ This release represents a fully production-ready deployment suitable for:
 
 **🎯 Result**: A professionally organized, cloud-ready Scripture Impact Assessment Survey tool that maintains its comprehensive feature set while ensuring reliable production deployment.
 
-**Copyright © 2025 CBASE**  
+**Copyright © 2025 NLCI/PBT**  
 **Developed for Scripture Impact Research**
