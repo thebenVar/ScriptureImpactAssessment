@@ -56,7 +56,7 @@
   <script>
     // Redirect if already authenticated
     if(localStorage.getItem('sir_auth_v1')){
-      window.location.replace('index.html');
+      window.location.replace('/');
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
@@ -102,7 +102,7 @@
         return;
       }
       localStorage.setItem('sir_auth_v1', JSON.stringify({ user: USER, ts: Date.now() }));
-      window.location.replace('index.html');
+  window.location.replace('/');
     });
   </script>
 </body>
