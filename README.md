@@ -1,6 +1,6 @@
 # Scripture Impact Assessment Survey
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/thebenVar/ScriptureImpactAssessment/releases)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/thebenVar/ScriptureImpactAssessment/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen.svg)]()
 
@@ -160,6 +160,23 @@ Status quo adequate, low felt need for change
 This project is developed for NLCI/PBT research purposes. Please refer to organizational guidelines for usage and distribution.
 
 ## 🚀 Changelog
+
+### [1.1.0] - 2025-10-25
+#### Fixed
+- **Vercel Deployment**: Resolved 404 errors and missing survey questions
+- **File Path Resolution**: Fixed CSS, JavaScript, and asset loading issues
+- **Root Directory Compatibility**: Added app/index.html for proper Vercel deployment
+
+#### Improved
+- **Deployment Configuration**: Optimized vercel.json for clean URL routing
+- **File Organization**: Maintained organized structure while ensuring compatibility
+- **Production Readiness**: Enhanced deployment reliability and accessibility
+
+#### Technical Changes
+- Added root index.html in app/ directory for Vercel compatibility
+- Updated file paths to use relative references (./css/, ./js/, ./assets/)
+- Simplified Vercel rewrites configuration
+- Fixed navigation links and asset references
 
 ### [1.0.0] - 2025-10-25
 #### Added

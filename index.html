@@ -1,72 +1,202 @@
-<!DOCTYPE html>
-<!-- Scripture Impact Assessment Survey v1.1.0 -->
-<!-- Copyright (c) 2025 CBASE -->
-<html lang="en" class="h-full scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scripture Impact Research</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { display: ['Inter', 'ui-sans-serif', 'system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
-          colors: {
-            brand: { 50:'#f5fbfa',100:'#e0f7f4',200:'#b3ebe0',300:'#80dfcb',400:'#33c5a3',500:'#00ab82',600:'#008c6b',700:'#006d54',800:'#004f3d',900:'#003d2f',950:'#00261d' },
-            accent: { 100:'#fff7e6',200:'#ffe7b3',300:'#ffd580',400:'#ffc24d',500:'#ffad1a',600:'#e68f00',700:'#b36e00',800:'#805000',900:'#4d3000' }
-          },
-          boxShadow: { glow:'0 0 0 3px rgba(0,171,130,.25)', innerbrand:'inset 0 1px 3px rgba(0,0,0,.25), 0 0 0 1px rgba(0,171,130,.4)' },
-          animation: { fadeIn:'fadeIn .6s ease both', pulseSlow:'pulse 4s ease-in-out infinite' },
-          keyframes: { fadeIn:{ '0%':{opacity:0, transform:'translateY(4px)'}, '100%':{opacity:1, transform:'translateY(0)'} } }
-        }
-      }
+<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
+
+<!-- Scripture Impact Assessment Survey v1.0.0 - Vercel Entry Point -->
+
+<!-- Copyright (c) 2025 CBASE --><!-- Scripture Impact Assessment Survey v1.0.0 - Vercel Entry Point --><html lang="en" class="h-full scroll-smooth">
+
+<html lang="en">
+
+<head><!-- Copyright (c) 2025 CBASE --><head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><html lang="en">  <meta charset="UTF-8" />
+
+  <title>Redirecting to Scripture Impact Survey...</title>
+
+  <meta http-equiv="refresh" content="0; url=./app/pages/index.html"><head>  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="canonical" href="./app/pages/index.html">
+
+  <style>  <meta charset="UTF-8">  <title>Scripture Impact Research</title>
+
+    body {
+
+      font-family: Inter, system-ui, sans-serif;  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+      background: linear-gradient(135deg, #f5fbfa 0%, #e0f7f4 100%);
+
+      display: flex;  <title>Redirecting to Scripture Impact Survey...</title>  <script>
+
+      align-items: center;
+
+      justify-content: center;  <meta http-equiv="refresh" content="0; url=./app/pages/index.html">    tailwind.config = {
+
+      min-height: 100vh;
+
+      margin: 0;  <link rel="canonical" href="./app/pages/index.html">      theme: {
+
+      color: #006d54;
+
+    }  <style>        extend: {
+
+    .redirect-container {
+
+      text-align: center;    body {          fontFamily: { display: ['Inter', 'ui-sans-serif', 'system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
+
+      background: white;
+
+      padding: 2rem;      font-family: Inter, system-ui, sans-serif;          colors: {
+
+      border-radius: 1rem;
+
+      box-shadow: 0 4px 12px rgba(0, 171, 130, 0.1);      background: linear-gradient(135deg, #f5fbfa 0%, #e0f7f4 100%);            brand: { 50:'#f5fbfa',100:'#e0f7f4',200:'#b3ebe0',300:'#80dfcb',400:'#33c5a3',500:'#00ab82',600:'#008c6b',700:'#006d54',800:'#004f3d',900:'#003d2f',950:'#00261d' },
+
+      border: 1px solid #b3ebe0;
+
+    }      display: flex;            accent: { 100:'#fff7e6',200:'#ffe7b3',300:'#ffd580',400:'#ffc24d',500:'#ffad1a',600:'#e68f00',700:'#b36e00',800:'#805000',900:'#4d3000' }
+
+    .spinner {
+
+      width: 40px;      align-items: center;          },
+
+      height: 40px;
+
+      border: 4px solid #b3ebe0;      justify-content: center;          boxShadow: { glow:'0 0 0 3px rgba(0,171,130,.25)', innerbrand:'inset 0 1px 3px rgba(0,0,0,.25), 0 0 0 1px rgba(0,171,130,.4)' },
+
+      border-top: 4px solid #00ab82;
+
+      border-radius: 50%;      min-height: 100vh;          animation: { fadeIn:'fadeIn .6s ease both', pulseSlow:'pulse 4s ease-in-out infinite' },
+
+      animation: spin 1s linear infinite;
+
+      margin: 0 auto 1rem;      margin: 0;          keyframes: { fadeIn:{ '0%':{opacity:0, transform:'translateY(4px)'}, '100%':{opacity:1, transform:'translateY(0)'} } }
+
     }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/styles.css" />
-  <script>
-    // Simple auth guard
-    if(!localStorage.getItem('sir_auth_v1')){
-      window.location.replace('./pages/login.html');
+
+    @keyframes spin {      color: #006d54;        }
+
+      0% { transform: rotate(0deg); }
+
+      100% { transform: rotate(360deg); }    }      }
+
     }
-  </script>
+
+    .manual-link {    .redirect-container {    }
+
+      color: #00ab82;
+
+      text-decoration: none;      text-align: center;  </script>
+
+      font-weight: 600;
+
+    }      background: white;  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    .manual-link:hover {
+
+      text-decoration: underline;      padding: 2rem;  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    }
+
+  </style>      border-radius: 1rem;  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
-<body class="h-full bg-gradient-to-br from-brand-50 via-white to-brand-100 font-body text-slate-800 selection:bg-brand-200 selection:text-brand-900">
-  <div id="app" class="min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="backdrop-blur bg-white/70 border-b border-brand-100 sticky top-0 z-30">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
-        <button id="mobileMenuBtn" class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-brand-200 bg-white/70 text-brand-600 hover:bg-white hover:shadow-sm" aria-label="Open menu">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-        <div class="flex items-center gap-2">
-          <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-600/30">SIR</div>
-          <div>
-            <h1 class="text-lg font-semibold tracking-tight">Scripture Impact Research Survey</h1>
-            <p class="text-xs text-slate-500 -mt-0.5">Story-centered engagement assessment</p>
-          </div>
-        </div>
-        <div class="ml-auto flex items-center gap-3 lg:gap-6">
-          <div class="hidden sm:flex items-center gap-4" aria-label="Progress overview">
-            <div class="relative">
-              <svg class="w-14 h-14 -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="44" class="stroke-brand-100" stroke-width="8" fill="none" />
-                <circle id="progressRing" cx="50" cy="50" r="44" class="stroke-brand-500 transition-all duration-500 ease-out" stroke-width="8" stroke-linecap="round" fill="none" stroke-dasharray="276.46" stroke-dashoffset="276.46" />
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-[10px] font-semibold text-brand-700 leading-tight">
-                <span id="progressPercent" class="text-sm">0%</span>
-                <span class="uppercase tracking-wide text-[9px] text-brand-500">Complete</span>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Section</p>
-              <p id="sectionTitle" class="text-sm font-semibold text-brand-700 line-clamp-1">Warm Up</p>
-              <div class="h-2 w-48 bg-brand-100 rounded-full overflow-hidden">
-                <div id="sectionProgress" class="h-full w-0 bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-500"></div>
-              </div>
+
+<body>      box-shadow: 0 4px 12px rgba(0, 171, 130, 0.1);  <link rel="stylesheet" href="styles.css" />
+
+  <div class="redirect-container">
+
+    <div class="spinner"></div>      border: 1px solid #b3ebe0;  <script>
+
+    <h1>Redirecting to Scripture Impact Survey...</h1>
+
+    <p>If you are not redirected automatically, <a href="./app/pages/index.html" class="manual-link">click here</a>.</p>    }    // Simple auth guard
+
+  </div>
+
+      .spinner {    if(!localStorage.getItem('sir_auth_v1')){
+
+  <script>
+
+    // Fallback redirect in case meta refresh doesn't work      width: 40px;      window.location.replace('login.html');
+
+    setTimeout(() => {
+
+      window.location.href = './app/pages/index.html';      height: 40px;    }
+
+    }, 100);
+
+  </script>      border: 4px solid #b3ebe0;  </script>
+
+</body>
+
+</html>      border-top: 4px solid #00ab82;</head>
+
+      border-radius: 50%;<body class="h-full bg-gradient-to-br from-brand-50 via-white to-brand-100 font-body text-slate-800 selection:bg-brand-200 selection:text-brand-900">
+
+      animation: spin 1s linear infinite;  <div id="app" class="min-h-screen flex flex-col">
+
+      margin: 0 auto 1rem;    <!-- Header -->
+
+    }    <header class="backdrop-blur bg-white/70 border-b border-brand-100 sticky top-0 z-30">
+
+    @keyframes spin {      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+
+      0% { transform: rotate(0deg); }        <button id="mobileMenuBtn" class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-brand-200 bg-white/70 text-brand-600 hover:bg-white hover:shadow-sm" aria-label="Open menu">
+
+      100% { transform: rotate(360deg); }          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+
+    }        </button>
+
+    .manual-link {        <div class="flex items-center gap-2">
+
+      color: #00ab82;          <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-600/30">SIR</div>
+
+      text-decoration: none;          <div>
+
+      font-weight: 600;            <h1 class="text-lg font-semibold tracking-tight">Scripture Impact Research Survey</h1>
+
+    }            <p class="text-xs text-slate-500 -mt-0.5">Story-centered engagement assessment</p>
+
+    .manual-link:hover {          </div>
+
+      text-decoration: underline;        </div>
+
+    }        <div class="ml-auto flex items-center gap-3 lg:gap-6">
+
+  </style>          <div class="hidden sm:flex items-center gap-4" aria-label="Progress overview">
+
+</head>            <div class="relative">
+
+<body>              <svg class="w-14 h-14 -rotate-90" viewBox="0 0 100 100">
+
+  <div class="redirect-container">                <circle cx="50" cy="50" r="44" class="stroke-brand-100" stroke-width="8" fill="none" />
+
+    <div class="spinner"></div>                <circle id="progressRing" cx="50" cy="50" r="44" class="stroke-brand-500 transition-all duration-500 ease-out" stroke-width="8" stroke-linecap="round" fill="none" stroke-dasharray="276.46" stroke-dashoffset="276.46" />
+
+    <h1>Redirecting to Scripture Impact Survey...</h1>              </svg>
+
+    <p>If you are not redirected automatically, <a href="./app/pages/index.html" class="manual-link">click here</a>.</p>              <div class="absolute inset-0 flex flex-col items-center justify-center text-[10px] font-semibold text-brand-700 leading-tight">
+
+  </div>                <span id="progressPercent" class="text-sm">0%</span>
+
+                  <span class="uppercase tracking-wide text-[9px] text-brand-500">Complete</span>
+
+  <script>              </div>
+
+    // Fallback redirect in case meta refresh doesn't work            </div>
+
+    setTimeout(() => {            <div class="space-y-1">
+
+      window.location.href = './app/pages/index.html';              <p class="text-xs font-medium text-slate-500">Section</p>
+
+    }, 100);              <p id="sectionTitle" class="text-sm font-semibold text-brand-700 line-clamp-1">Warm Up</p>
+
+  </script>              <div class="h-2 w-48 bg-brand-100 rounded-full overflow-hidden">
+
+</body>                <div id="sectionProgress" class="h-full w-0 bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-500"></div>
+
+</html>              </div>
             </div>
           </div>
           <button id="exportBtn" class="relative group inline-flex items-center gap-2 rounded-lg border border-brand-300 bg-white/70 hover:bg-white text-brand-700 px-3 lg:px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md transition">
@@ -74,7 +204,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></svg>
             <span class="absolute -bottom-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-white text-[10px] font-semibold" id="badgeCount">0</span>
           </button>
-              <a href="./pages/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 rounded-lg border border-accent-300 bg-accent-100 hover:bg-accent-200 text-accent-800 px-3 lg:px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md transition" title="Open offline PDF version">
+          <a href="output/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 rounded-lg border border-accent-300 bg-accent-100 hover:bg-accent-200 text-accent-800 px-3 lg:px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md transition" title="Open offline PDF version">
             <span class="hidden sm:inline">PDF Version</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </a>
@@ -107,14 +237,14 @@
               Need to conduct interviews offline or in the field? We've created a professional PDF version optimized for printing and hand-written responses. Perfect for areas with limited internet connectivity.
             </p>
             <div class="flex flex-wrap items-center gap-3">
-              <a href="./pages/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
+              <a href="output/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                 </svg>
                 View PDF Version
               </a>
-              <a href="./assets/Scripture Impact Assessment Survey - PDF Version.pdf" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-accent-50 text-accent-700 border border-accent-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
+              <a href="output/Scripture Impact Assessment Survey - PDF Version.pdf" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-accent-50 text-accent-700 border border-accent-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
@@ -245,7 +375,7 @@
           <button id="mobileExport" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 shadow">Export</button>
           <button id="mobileAssess" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-slate-900 text-sm font-medium py-2 shadow">Auto Assess</button>
         </div>
-        <a href="./pages/survey-pdf.html" target="_blank" class="w-full inline-flex justify-center items-center gap-2 rounded-lg border-2 border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-sm font-medium py-2 shadow-sm transition">
+        <a href="output/survey-pdf.html" target="_blank" class="w-full inline-flex justify-center items-center gap-2 rounded-lg border-2 border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-sm font-medium py-2 shadow-sm transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
@@ -325,7 +455,7 @@
         </section>
         <section>
           <h3 class="font-semibold text-brand-700 mb-2 text-sm">10. More Detail</h3>
-          <p>See the full <a href="./pages/help.html" target="_blank" class="text-brand-600 hover:text-brand-700 underline">Help & Reference Page</a> for extended badge list, decision logic, and interviewer ethics.</p>
+          <p>See the full <a href="help.html" target="_blank" class="text-brand-600 hover:text-brand-700 underline">Help & Reference Page</a> for extended badge list, decision logic, and interviewer ethics.</p>
         </section>
       </div>
     </div>
@@ -361,12 +491,12 @@
       <span class="badgeLabel"></span>
     </div>
   </template>
-  <script src="./js/app.js"></script>
+  <script src="app.js" type="module"></script>
   <script>
     // Attach logout handler after module load
     document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
       localStorage.removeItem('sir_auth_v1');
-      window.location.replace('./pages/login.html');
+      window.location.replace('login.html');
     });
   </script>
 </body>
