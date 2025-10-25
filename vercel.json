@@ -1,43 +1,14 @@
 {
-  "buildCommand": null,
-  "outputDirectory": "app",
-  "rewrites": [
-    {
-      "source": "/login",
-      "destination": "login.html"
-    },
-    {
-      "source": "/help",
-      "destination": "/help.html"
-    },
-    {
-      "source": "/coming-soon",
-      "destination": "/coming-soon.html"
-    },
-    {
-      "source": "/survey-pdf",
-      "destination": "/survey-pdf.html"
-    }
-  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options", 
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
-  ],
-  "trailingSlash": false,
-  "cleanUrls": true
+  ]
 }
