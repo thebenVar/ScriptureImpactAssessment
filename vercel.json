@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/pages/index.html"
-    },
-    {
       "source": "/login",
       "destination": "/pages/login.html"
     },

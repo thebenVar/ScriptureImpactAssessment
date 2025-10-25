@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<!-- Scripture Impact Assessment Survey v1.0.0 -->
+<!-- Copyright (c) 2025 CBASE -->
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scripture Impact Research</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['Inter', 'ui-sans-serif', 'system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: { 50:'#f5fbfa',100:'#e0f7f4',200:'#b3ebe0',300:'#80dfcb',400:'#33c5a3',500:'#00ab82',600:'#008c6b',700:'#006d54',800:'#004f3d',900:'#003d2f',950:'#00261d' },
+            accent: { 100:'#fff7e6',200:'#ffe7b3',300:'#ffd580',400:'#ffc24d',500:'#ffad1a',600:'#e68f00',700:'#b36e00',800:'#805000',900:'#4d3000' }
+          },
+          boxShadow: { glow:'0 0 0 3px rgba(0,171,130,.25)', innerbrand:'inset 0 1px 3px rgba(0,0,0,.25), 0 0 0 1px rgba(0,171,130,.4)' },
+          animation: { fadeIn:'fadeIn .6s ease both', pulseSlow:'pulse 4s ease-in-out infinite' },
+          keyframes: { fadeIn:{ '0%':{opacity:0, transform:'translateY(4px)'}, '100%':{opacity:1, transform:'translateY(0)'} } }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script>
+    // Simple auth guard
+    if(!localStorage.getItem('sir_auth_v1')){
+      window.location.replace('./pages/login.html');
+    }
+  </script>
+</head>
+<body class="h-full bg-gradient-to-br from-brand-50 via-white to-brand-100 font-body text-slate-800 selection:bg-brand-200 selection:text-brand-900">
+  <div id="app" class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="backdrop-blur bg-white/70 border-b border-brand-100 sticky top-0 z-30">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+        <button id="mobileMenuBtn" class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-brand-200 bg-white/70 text-brand-600 hover:bg-white hover:shadow-sm" aria-label="Open menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-600/30">SIR</div>
+          <div>
+            <h1 class="text-lg font-semibold tracking-tight">Scripture Impact Research Survey</h1>
+            <p class="text-xs text-slate-500 -mt-0.5">Story-centered engagement assessment</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-3 lg:gap-6">
+          <div class="hidden sm:flex items-center gap-4" aria-label="Progress overview">
+            <div class="relative">
+              <svg class="w-14 h-14 -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="44" class="stroke-brand-100" stroke-width="8" fill="none" />
+                <circle id="progressRing" cx="50" cy="50" r="44" class="stroke-brand-500 transition-all duration-500 ease-out" stroke-width="8" stroke-linecap="round" fill="none" stroke-dasharray="276.46" stroke-dashoffset="276.46" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-[10px] font-semibold text-brand-700 leading-tight">
+                <span id="progressPercent" class="text-sm">0%</span>
+                <span class="uppercase tracking-wide text-[9px] text-brand-500">Complete</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Section</p>
+              <p id="sectionTitle" class="text-sm font-semibold text-brand-700 line-clamp-1">Warm Up</p>
+              <div class="h-2 w-48 bg-brand-100 rounded-full overflow-hidden">
+                <div id="sectionProgress" class="h-full w-0 bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-500"></div>
+              </div>
+            </div>
+          </div>
+          <button id="exportBtn" class="relative group inline-flex items-center gap-2 rounded-lg border border-brand-300 bg-white/70 hover:bg-white text-brand-700 px-3 lg:px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md transition">
+            <span class="hidden sm:inline">Export</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></svg>
+            <span class="absolute -bottom-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-white text-[10px] font-semibold" id="badgeCount">0</span>
+          </button>
+              <a href="./pages/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 rounded-lg border border-accent-300 bg-accent-100 hover:bg-accent-200 text-accent-800 px-3 lg:px-4 py-2 text-sm font-medium shadow-sm hover:shadow-md transition" title="Open offline PDF version">
+            <span class="hidden sm:inline">PDF Version</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </a>
+          <button id="resetBtn" class="hidden sm:inline text-xs text-slate-400 hover:text-brand-600 underline">Reset</button>
+          <button id="helpBtn" class="hidden sm:inline-flex items-center gap-1 rounded-lg border border-brand-300 bg-white/70 hover:bg-white text-brand-700 px-3 py-2 text-sm font-medium shadow-sm hover:shadow-md transition" aria-haspopup="dialog" aria-controls="helpModal">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17h.01M12 7a4 4 0 0 0-4 4c0 1.657 1.343 3 3 3h2a3 3 0 1 1 0 6m0-13V5"/></svg>
+            <span>Help</span>
+          </button>
+          <button id="logoutBtn" class="hidden sm:inline-flex items-center gap-1 rounded-lg border border-brand-300 bg-white/70 hover:bg-white text-brand-700 px-3 py-2 text-xs font-medium shadow-sm hover:shadow-md transition" title="Logout">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-4 sm:py-6 lg:py-10">
+      
+      <!-- Offline PDF Version Info Banner -->
+      <div class="mb-6 bg-gradient-to-r from-accent-50 to-accent-100 border border-accent-200 rounded-2xl p-4 lg:p-6 shadow-lg shadow-accent-900/5">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-accent-900 mb-2">📋 Offline PDF Version Available</h3>
+            <p class="text-accent-800 text-sm leading-relaxed mb-4">
+              Need to conduct interviews offline or in the field? We've created a professional PDF version optimized for printing and hand-written responses. Perfect for areas with limited internet connectivity.
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+              <a href="./pages/survey-pdf.html" target="_blank" class="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                View PDF Version
+              </a>
+              <a href="./assets/Scripture Impact Assessment Survey - PDF Version.pdf" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-accent-50 text-accent-700 border border-accent-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Download PDF
+              </a>
+              <span class="text-xs text-accent-600 bg-white px-2 py-1 rounded border border-accent-200">
+                A4 Optimized • Matrix Coding Included • 39 Questions
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIX: wrap questionnaire + sidebar inside grid container -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Questionnaire Panel -->
+        <div class="lg:col-span-2 space-y-6 sm:space-y-8" id="questionnaire"></div>
+
+        <!-- Sidebar (desktop) -->
+        <aside id="sidebar" aria-label="Survey tools" class="hidden lg:block lg:space-y-6 lg:sticky lg:top-24 h-fit overflow-y-auto pr-2 max-h-[calc(100vh-6rem)]">
+          <!-- Interviewer Tips -->
+          <section class="bg-white/80 backdrop-blur shadow-lg shadow-brand-900/5 rounded-2xl border border-brand-100 overflow-hidden" id="guidanceSection">
+            <div class="p-4 flex items-center gap-2 bg-gradient-to-r from-brand-500 to-brand-600 text-white">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"/></svg>
+              <h2 class="font-semibold tracking-wide text-sm">Live Guidance</h2>
+            </div>
+            <div class="px-4 pt-3 text-[11px] text-slate-600 leading-relaxed border-b border-brand-100 bg-white/60">
+              Contextual prompts that change when you click / focus a question. Use them to deepen stories and capture exact phrases. Expand Section Tips for broader strategy.
+            </div>
+            <div class="p-4 space-y-4" id="tipsPanel"></div>
+          </section>
+
+          <!-- Badges -->
+            <section class="bg-white/80 backdrop-blur shadow-lg shadow-brand-900/5 rounded-2xl border border-brand-100 overflow-hidden" id="badgesSection">
+            <div class="p-4 flex items-center gap-2 bg-gradient-to-r from-accent-400 to-accent-600 text-slate-900">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17l-5.878 3.09 1.123-6.545L2.49 8.91l6.564-.955L12 2l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z"/></svg>
+              <h2 class="font-semibold tracking-wide text-sm">Badges & XP</h2>
+            </div>
+            <div class="px-4 pt-3 text-[11px] text-slate-600 leading-relaxed border-b border-accent-200 bg-white/60">
+              Earn XP (+10) the first time you save each answer. Hidden badges unlock for narrative depth, key term capture, variety of forms, language analysis, and full completion.
+            </div>
+            <div class="p-4 space-y-4">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-600">
+                <span>Total XP</span><span id="xpValue" class="text-brand-700 font-semibold">0</span>
+              </div>
+              <div class="flex flex-wrap gap-2" id="badgeContainer"></div>
+            </div>
+          </section>
+
+          <!-- Coding Assistant -->
+          <section class="bg-white/80 backdrop-blur shadow-lg shadow-brand-900/5 rounded-2xl border border-brand-100 overflow-hidden" id="codingSection">
+            <div class="p-4 flex items-center gap-2 bg-gradient-to-r from-brand-400 to-brand-600 text-slate-900">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16 16 2 2 4-4m-6 1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h7"/></svg>
+              <h2 class="font-semibold tracking-wide text-sm">Matrix Coding</h2>
+            </div>
+            <div class="px-4 pt-3 text-[11px] text-slate-600 leading-relaxed border-b border-brand-200 bg-white/60 space-y-2">
+              <p>Flag category signals and assign Use Level (1–4). Auto Assess scans stories for keywords, then you refine. Primary category + Use Level combine into the final code.</p>
+              <ul class="list-disc pl-5 space-y-1">
+                <li><span class="font-semibold">T</span> Translation quality / naturalness</li>
+                <li><span class="font-semibold">SE</span> Scripture engagement / access pathways</li>
+                <li><span class="font-semibold">S</span> Spiritual climate / openness</li>
+                <li><span class="font-semibold">M</span> Multilingual dynamics / language choice</li>
+                <li><span class="font-semibold">NI</span> No significant issues (status quo)</li>
+              </ul>
+            </div>
+            <div class="p-4 space-y-4 text-sm" id="codingAssistant">
+              <p class="text-slate-600">Auto-scan responses for category signals. Adjust manually.</p>
+              <div class="grid grid-cols-2 gap-3" id="categoryFlags"></div>
+              <div class="flex flex-wrap items-center gap-2">
+                <label class="block text-xs font-medium text-slate-500">Use Level</label>
+                <select id="useLevelSelect" class="mt-0.5 w-24 rounded-md border-brand-200 focus:border-brand-400 focus:ring-brand-400 text-sm">
+                  <option value="">--</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+                <button id="autoAssessBtn" class="ml-auto text-xs px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-medium shadow">Auto Assess</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <label class="block text-xs font-medium text-slate-500">Primary</label>
+                <select id="primaryCategory" class="mt-0.5 flex-1 rounded-md border-brand-200 focus:border-brand-400 focus:ring-brand-400 text-sm">
+                  <option value="">--</option>
+                  <option value="T">T</option>
+                  <option value="SE">SE</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="NI">NI</option>
+                </select>
+              </div>
+              <div class="p-3 rounded-lg bg-brand-50 border border-brand-100 text-xs font-medium flex items-center gap-2">
+                <span>Code:</span><span id="finalCode" class="text-brand-700 font-semibold tracking-wide">--</span>
+              </div>
+              <textarea id="codingNotes" rows="4" placeholder="Rationale..." class="w-full resize-none rounded-md border-brand-200 focus:border-brand-400 focus:ring-brand-400 text-xs"></textarea>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="mt-10 lg:mt-16 border-t border-brand-100 bg-white/70 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 flex flex-wrap items-center gap-4">
+        <span>&copy; 2025 Scripture Impact Research Toolkit</span>
+        <span class="hidden sm:inline">|</span>
+        <span>Local storage autosave enabled</span>
+        <span class="hidden sm:inline">|</span>
+        <button id="printSummaryBtn" class="text-brand-600 hover:text-brand-700 underline">Printable Summary</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Mobile Offcanvas Panel -->
+  <div id="mobilePanel" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+    <div id="mobileOverlay" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
+    <div class="absolute inset-y-0 right-0 w-full max-w-md bg-gradient-to-b from-white/90 to-white overflow-y-auto shadow-xl flex flex-col">
+      <div class="p-4 flex items-center gap-3 border-b border-brand-100 bg-white/80 backdrop-blur sticky top-0 z-10">
+        <button id="closeMobilePanel" class="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-brand-200 text-slate-500 hover:text-brand-700 hover:bg-white" aria-label="Close menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+        <h2 class="font-semibold text-sm text-brand-700 tracking-wide">Tools & Guidance</h2>
+        <div class="ml-auto flex items-center gap-2 text-[10px] font-medium text-slate-500">
+          <span class="px-2 py-1 rounded-full bg-brand-100 text-brand-600" id="mobileXP">XP: <span id="mobileXPValue">0</span></span>
+        </div>
+      </div>
+      <div id="mobilePanelContent" class="p-4 space-y-6"></div>
+      <div class="p-4 border-t border-brand-100 space-y-3">
+        <div class="flex gap-2">
+          <button id="mobileExport" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 shadow">Export</button>
+          <button id="mobileAssess" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-slate-900 text-sm font-medium py-2 shadow">Auto Assess</button>
+        </div>
+        <a href="./pages/survey-pdf.html" target="_blank" class="w-full inline-flex justify-center items-center gap-2 rounded-lg border-2 border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-sm font-medium py-2 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          View Offline PDF Version
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="helpModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
+    <div class="relative mx-auto my-6 w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-brand-100 bg-gradient-to-r from-brand-500 to-brand-600 text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17h.01M12 7a4 4 0 0 0-4 4c0 1.657 1.343 3 3 3h2a3 3 0 1 1 0 6m0-13V5"/></svg>
+        <h2 id="helpTitle" class="font-semibold text-sm tracking-wide">How to Use This Survey Tool</h2>
+        <button id="closeHelp" class="ml-auto h-9 w-9 inline-flex items-center justify-center rounded-lg border border-white/30 text-white/90 hover:bg-white/10" aria-label="Close help">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-5 overflow-y-auto text-sm leading-relaxed space-y-6">
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">1. Purpose</h3>
+          <p>This tool captures narrative evidence of Scripture use, access, and influence in a language community. It blends qualitative interviewing with a lightweight coding matrix for rapid situational assessment.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">2. Workflow</h3>
+          <ol class="list-decimal pl-5 space-y-1">
+            <li>Build rapport (Warm Up) before deeper domains.</li>
+            <li>Click a question: Live Guidance updates with probes.</li>
+            <li>Record verbatim phrases & events; save when stable.</li>
+            <li>Earn XP on first save; badges encourage thoroughness.</li>
+            <li>Periodically run Auto Assess; refine flags manually.</li>
+            <li>Assign Use Level (1–4) and a Primary Category.</li>
+            <li>Export JSON for storage or analysis; Print summary if needed.</li>
+          </ol>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">3. Live Guidance</h3>
+          <p>Contextual micro‑prompts (Probe, Cue, Watch, Reminder) steer depth without leading. Section Tips summarize strategic aims. If no specific guidance, rely on core interview principles (neutral tone, ask for concrete recent stories, capture who / when / where).</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">4. Badges & XP</h3>
+          <p>Gamification nudges completeness and richness:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>+10 XP first save per question.</li>
+            <li>Badges (examples): Deep Narrative (long detailed account), Key Term Capture, Language Analyst, Story Weaver (varied sections), All Sections Complete.</li>
+          </ul>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">5. Matrix Coding</h3>
+          <p>Categories prioritize the dominant constraint or opportunity emerging from narratives:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>T</strong> Translation: naturalness, clarity, key terms, trust.</li>
+            <li><strong>SE</strong> Scripture Engagement: access channels, formats, acquisition, literacy.</li>
+            <li><strong>S</strong> Spiritual Climate: openness, hunger, resistance social dynamics.</li>
+            <li><strong>M</strong> Multilingual Dynamics: language choices, inclusion/exclusion, prestige.</li>
+            <li><strong>NI</strong> No Issues: status quo adequate; low felt need for change.</li>
+          </ul>
+          <p class="mt-2">Use Level (1–4) reflects depth of vernacular Scripture use: 1 = minimal / rare, 4 = integrated / normalized across domains.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">6. Auto Assess</h3>
+          <p>Keyword heuristics highlight possible categories; you must confirm or adjust. Retain qualitative nuance—never substitute the algorithm for judgment.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">7. Editing Answers</h3>
+          <p>After saving, the response locks (prevents accidental edits). Click Edit to re‑open, then Save to lock again.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">8. Mobile & Accessibility</h3>
+          <p>On small screens tap the menu to access Guidance, Badges, and Coding. Keyboard: Alt+E export, Alt+S auto assess, Esc closes panels.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">9. Data & Privacy</h3>
+          <p>All data stays in your browser (local storage) until you export. Clear with Reset if using a shared device. Do not capture personally identifying details unnecessarily.</p>
+        </section>
+        <section>
+          <h3 class="font-semibold text-brand-700 mb-2 text-sm">10. More Detail</h3>
+          <p>See the full <a href="./pages/help.html" target="_blank" class="text-brand-600 hover:text-brand-700 underline">Help & Reference Page</a> for extended badge list, decision logic, and interviewer ethics.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates -->
+  <template id="questionTemplate">
+    <div class="question-card group animate-fadeIn rounded-2xl bg-white/80 backdrop-blur border border-brand-100 shadow-lg shadow-brand-900/5 overflow-hidden" data-question-id="">
+      <div class="p-4 sm:p-5 space-y-5">
+        <div class="flex items-start gap-3">
+          <div class="shrink-0 mt-0.5 h-8 w-8 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-semibold text-xs shadow-inner">Q</div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-brand-800 leading-snug question-title text-sm sm:text-base"></h3>
+            <p class="text-[10px] sm:text-xs text-slate-500 mt-1 question-help"></p>
+          </div>
+          <button class="collapseBtn text-slate-400 hover:text-brand-600" title="Collapse / Expand" aria-label="Collapse"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        </div>
+        <div class="response-area space-y-3">
+          <textarea class="w-full rounded-lg border border-brand-200 focus:ring-brand-400 focus:border-brand-400 bg-white/70 backdrop-blur-sm p-3 text-sm leading-relaxed shadow-sm focus:shadow-md transition" rows="4" placeholder="Record story / exact phrases / observations..." aria-label="Response"></textarea>
+          <div class="flex flex-wrap items-center gap-3 text-[11px] font-medium">
+            <span class="px-2 py-1 rounded-full bg-brand-100 text-brand-700 wordCount">0 words</span>
+            <span class="px-2 py-1 rounded-full bg-accent-200 text-accent-800 opacity-0 transition badgeHint">+10 XP</span>
+            <button class="ml-auto inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white shadow text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-400 saveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="h-1 w-0 bg-gradient-to-r from-brand-400 to-brand-600 progressLine transition-all duration-500"></div>
+    </div>
+  </template>
+  <template id="badgeTemplate">
+    <div class="badge flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-100 border border-brand-200 text-[10px] font-semibold text-brand-700 shadow-sm">
+      <span class="inline-block h-2 w-2 rounded-full bg-brand-500"></span>
+      <span class="badgeLabel"></span>
+    </div>
+  </template>
+  <script src="./js/app.js"></script>
+  <script>
+    // Attach logout handler after module load
+    document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
+      localStorage.removeItem('sir_auth_v1');
+      window.location.replace('./pages/login.html');
+    });
+  </script>
+</body>
+</html>
