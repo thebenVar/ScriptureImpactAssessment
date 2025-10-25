@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scripture Impact Research Survey - PDF Version</title>
+  <style>
+    /* Print-optimized styles */
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 11pt;
+        line-height: 1.4;
+      }
+      
+      .page-break {
+        page-break-before: always;
+      }
+      
+      .no-break {
+        page-break-inside: avoid;
+      }
+      
+      .header-banner {
+        background: linear-gradient(135deg, #00ab82 0%, #006d54 100%) !important;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header-banner {
+      background: linear-gradient(135deg, #00ab82 0%, #006d54 100%);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+      background-size: 50px 50px;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+    }
+
+    .header-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Container */
+    .container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Main content area */
+    .main-content {
+      width: 100%;
+      padding: 1rem 2rem;
+    }
+
+    /* Guidance overview section */
+    .guidance-overview {
+      background: linear-gradient(to bottom, #f1f5f9 0%, #e2e8f0 100%);
+      border: 3px solid #00ab82;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin: 1rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .guidance-overview-title {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #006d54;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #00ab82;
+    }
+
+    /* Questions section - full width */
+    .questions-section {
+      width: 100%;
+    }
+
+    /* Section styling */
+    .section {
+      margin-bottom: 3rem;
+      page-break-inside: avoid;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00ab82, #33c5a3);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      box-shadow: 0 4px 12px rgba(0,171,130,0.3);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #006d54;
+      flex: 1;
+    }
+
+    /* Question styling */
+    .question {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      page-break-inside: avoid;
+    }
+
+    .question-header {
+      background: linear-gradient(to right, #f8fafc, #f1f5f9);
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .question-number {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: #00ab82;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-right: 0.75rem;
+    }
+
+    .question-id {
+      display: inline-block;
+      background: #e0f7f4;
+      color: #006d54;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .question-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-help {
+      font-size: 0.85rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .question-body {
+      padding: 1.5rem;
+    }
+
+    .answer-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 2rem;
+      background: #fafafa;
+      min-height: 120px;
+    }
+
+    /* Guidance boxes */
+    .guidance-section {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border-left: 3px solid #00ab82;
+    }
+
+    .guidance-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #006d54;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .guidance-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 0.4rem;
+      opacity: 0.8;
+    }
+
+    .guidance-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .guidance-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 0.85rem;
+      line-height: 1.3;
+    }
+
+    .guidance-item::before {
+      content: '→';
+      position: absolute;
+      left: 0.5rem;
+      top: 0.5rem;
+      color: #00ab82;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    .guidance-item.probe {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+    }
+
+    .guidance-item.cue {
+      border-left: 4px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    .guidance-item.watch {
+      border-left: 4px solid #ef4444;
+      background: #fef2f2;
+    }
+
+    .guidance-item.reminder {
+      border-left: 4px solid #8b5cf6;
+      background: #f5f3ff;
+    }
+
+    /* Callout boxes */
+    .callout {
+      background: linear-gradient(135deg, #fef3c7, #fcd34d);
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .callout::before {
+      content: '💡';
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: white;
+      padding: 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .callout-title {
+      font-weight: bold;
+      color: #92400e;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    /* Matrix coding section */
+    .coding-matrix {
+      background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+      border: 2px solid #8b5cf6;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .matrix-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #5b21b6;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .matrix-cell {
+      background: white;
+      border: 2px solid #c4b5fd;
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .matrix-cell.header {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1e293b;
+      color: white;
+      padding: 1.2rem;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .footer-item {
+      text-align: left;
+    }
+
+    .footer-item strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #00ab82;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+      .guidance-overview {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .header-title {
+        font-size: 2rem;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+    }
+
+    @media print {
+      .guidance-overview {
+        page-break-inside: avoid;
+        margin: 0.5rem 0;
+        padding: 1rem;
+      }
+      
+      .header-banner {
+        padding: 1rem;
+      }
+      
+      .header-content {
+        min-height: 150px;
+      }
+      
+      .main-content {
+        padding: 0.75rem 1.5rem;
+        flex: 1;
+      }
+      
+      .guidance-section {
+        padding: 0.75rem;
+        margin-bottom: 0;
+      }
+      
+      .guidance-item {
+        padding: 0.4rem;
+        padding-left: 1.8rem;
+        margin-bottom: 0.4rem;
+        font-size: 0.8rem;
+      }
+      
+      .footer {
+        page-break-inside: avoid;
+        margin-top: 2rem;
+      }
+      
+      .container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header-banner">
+      <div class="header-content">
+        <h1 class="header-title">Scripture Impact Research</h1>
+        <p class="header-subtitle">Story-Centered Engagement Assessment Survey</p>
+        <div class="header-badge">Conversational Interview Tool</div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <!-- Title and Copyright Section -->
+      <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border: 2px solid #00ab82; border-radius: 12px; padding: 2rem; margin: 1rem 0; text-align: center;">
+        <h1 style="font-size: 2rem; font-weight: bold; color: #006d54; margin-bottom: 1rem; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          📋 Scripture Impact Assessment Toolkit
+        </h1>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 1.5rem; text-align: left;">
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #00ab82; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <h3 style="color: #006d54; font-weight: bold; margin-bottom: 0.75rem; font-size: 1.1rem;">📚 About This Tool</h3>
+            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5;">
+              A comprehensive assessment framework for evaluating Scripture impact in language communities through story-centered interviews and systematic coding.
+            </p>
+          </div>
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #8b5cf6; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <h3 style="color: #7c3aed; font-weight: bold; margin-bottom: 0.75rem; font-size: 1.1rem;">©️ Attribution</h3>
+            <div style="font-size: 0.9rem; color: #475569; line-height: 1.6;">
+              <strong>Copyright:</strong> NLCI/PBT (2025)<br>
+              <strong>Adapted by:</strong> NLCI Research and Innovation Department<br>
+              <strong>Version:</strong> PDF for offline distribution
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrix Coding Assessment -->
+      <div style="background: linear-gradient(135deg, #ddd6fe, #c4b5fd); border: 3px solid #8b5cf6; border-radius: 12px; padding: 1.5rem; margin: 1rem 0;">
+        <h2 style="text-align: center; font-size: 1.4rem; font-weight: bold; color: #5b21b6; margin-bottom: 1rem;">
+          🎯 Matrix Coding Assessment
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+          <div style="background: #8b5cf6; color: white; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.9rem;">T</div>
+          <div style="background: #8b5cf6; color: white; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.9rem;">SE</div>
+          <div style="background: #8b5cf6; color: white; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.9rem;">S</div>
+          <div style="background: #8b5cf6; color: white; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.9rem;">M</div>
+          <div style="background: #8b5cf6; color: white; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.9rem;">NI</div>
+          
+          <div style="background: white; border: 2px solid #c4b5fd; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.8rem; line-height: 1.2;">Translation Quality</div>
+          <div style="background: white; border: 2px solid #c4b5fd; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.8rem; line-height: 1.2;">Scripture Engagement</div>
+          <div style="background: white; border: 2px solid #c4b5fd; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.8rem; line-height: 1.2;">Spiritual Climate</div>
+          <div style="background: white; border: 2px solid #c4b5fd; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.8rem; line-height: 1.2;">Multilingual Dynamics</div>
+          <div style="background: white; border: 2px solid #c4b5fd; border-radius: 6px; padding: 0.5rem; text-align: center; font-weight: bold; font-size: 0.8rem; line-height: 1.2;">No Issues</div>
+        </div>
+        
+        <div style="display: flex; gap: 2rem; align-items: center; margin-top: 1rem; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <label style="font-weight: bold; color: #5b21b6; font-size: 0.9rem; white-space: nowrap;">Primary Category:</label>
+            <div style="border: 3px solid #8b5cf6; border-radius: 6px; padding: 0.5rem; background: white; width: 4rem; height: 2rem;"></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <label style="font-weight: bold; color: #5b21b6; font-size: 0.9rem; white-space: nowrap;">Use Level (1-4):</label>
+            <div style="border: 3px solid #8b5cf6; border-radius: 6px; padding: 0.5rem; background: white; width: 3rem; height: 2rem;"></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <label style="font-weight: bold; color: #5b21b6; font-size: 0.9rem; white-space: nowrap;">Final Code:</label>
+            <div style="border: 3px solid #8b5cf6; border-radius: 6px; padding: 0.5rem; background: white; width: 4rem; height: 2rem; font-size: 1.2rem; text-align: center; font-weight: bold;"></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <label style="display: block; font-weight: bold; margin-bottom: 0.5rem; color: #5b21b6;">Coding Notes & Rationale:</label>
+          <div style="border: 3px solid #8b5cf6; border-radius: 8px; padding: 1rem; background: white; min-height: 4rem;"></div>
+        </div>
+      </div>
+
+      <!-- Guidance Overview Section -->
+      <div class="guidance-overview">
+        <h2 class="guidance-overview-title">📋 Interview Guide & Assessment Framework</h2>
+        
+        <div class="guidance-section">
+          <h3 class="guidance-title">
+            <svg class="guidance-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"/>
+            </svg>
+            Interview Guidelines
+          </h3>
+          <div style="background: #fff7e6; border: 1px solid #f59e0b; border-radius: 6px; padding: 0.75rem; margin-bottom: 0.75rem; font-style: italic; color: #92400e; font-size: 0.85rem;">
+            <strong>📝 Recording Instructions:</strong> In each answer box, record stories, exact phrases, and detailed observations from the interview.
+          </div>
+          <ul class="guidance-list">
+            <li class="guidance-item probe">Always ask for concrete recent stories, not hypothetical scenarios</li>
+            <li class="guidance-item cue">Capture exact phrases and vernacular expressions verbatim</li>
+            <li class="guidance-item watch">Note who was present, when it happened, and what followed</li>
+            <li class="guidance-item reminder">Say "Thank you" to normalize all answers, not "Good"</li>
+          </ul>
+        </div>
+
+        <div class="guidance-section">
+          <h3 class="guidance-title">
+            <svg class="guidance-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 17l-5.878 3.09 1.123-6.545L2.49 8.91l6.564-.955L12 2l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z"/>
+            </svg>
+            Category Definitions
+          </h3>
+          <ul class="guidance-list">
+            <li class="guidance-item"><strong>T - Translation:</strong> Quality, naturalness, key terms, comprehension, trust in translators</li>
+            <li class="guidance-item"><strong>SE - Scripture Engagement:</strong> Access pathways, formats, distribution, acquisition barriers</li>
+            <li class="guidance-item"><strong>S - Spiritual Climate:</strong> Openness, hunger, resistance, social dynamics around faith</li>
+            <li class="guidance-item"><strong>M - Multilingual:</strong> Language choices, inclusion/exclusion, prestige, leader capability</li>
+            <li class="guidance-item"><strong>NI - No Issues:</strong> Status quo adequate, low felt need for change</li>
+          </ul>
+        </div>
+
+        <div class="guidance-section">
+          <h3 class="guidance-title">
+            <svg class="guidance-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"/>
+            </svg>
+            Use Levels
+          </h3>
+          <ul class="guidance-list">
+            <li class="guidance-item"><strong>Level 1:</strong> Minimal/rare vernacular Scripture use</li>
+            <li class="guidance-item"><strong>Level 2:</strong> Occasional use in specific contexts</li>
+            <li class="guidance-item"><strong>Level 3:</strong> Regular use across multiple domains</li>
+            <li class="guidance-item"><strong>Level 4:</strong> Integrated/normalized across all domains</li>
+          </ul>
+        </div>
+
+        <div class="guidance-section">
+          <h3 class="guidance-title">
+            <svg class="guidance-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"/>
+            </svg>
+            Key Reminders
+          </h3>
+          <ul class="guidance-list">
+            <li class="guidance-item probe">Ground all questions in actual events the respondent attended</li>
+            <li class="guidance-item watch">Listen for affect: curiosity, fear, indifference, enthusiasm</li>
+            <li class="guidance-item cue">Map language functions systematically (worship vs teaching vs prayer)</li>
+            <li class="guidance-item reminder">Avoid leading questions; let stories emerge naturally</li>
+          </ul>
+        </div>
+
+        <div class="callout" style="grid-column: 1 / -1; margin: 0.75rem 0; padding: 1rem;">
+          <div class="callout-title" style="margin-bottom: 0.75rem;">Interview Details</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 0.5rem;">
+            <div>
+              <strong style="font-size: 0.9rem;">Assessment Date:</strong><br>
+              <div style="border-bottom: 2px solid #92400e; margin-top: 0.3rem; padding-bottom: 0.2rem;"></div>
+            </div>
+            <div>
+              <strong style="font-size: 0.9rem;">Interviewer:</strong><br>
+              <div style="border-bottom: 2px solid #92400e; margin-top: 0.3rem; padding-bottom: 0.2rem;"></div>
+            </div>
+            <div>
+              <strong style="font-size: 0.9rem;">Community/Location:</strong><br>
+              <div style="border-bottom: 2px solid #92400e; margin-top: 0.3rem; padding-bottom: 0.2rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions Section -->
+      <div class="questions-section">
+        
+        <!-- Warm Up Section -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">W</div>
+            <h2 class="section-title">Warm Up & Rapport</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Normalize all answers:</strong> say "Thank you" not "Good".<br>
+            <strong>Anchor future language use references</strong> (work, gatherings).</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">1</span>
+              <div>
+                <div class="question-text">Tell me about a normal week for you—work, family, gatherings.
+                  <span class="question-id">warm_week</span>
+                </div>
+                <div class="question-help">Context & rhythm; note domains and language choices.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">2</span>
+              <div>
+                <div class="question-text">When people in your household talk about important things (health, money, God), what languages do you use?
+                  <span class="question-id">warm_languages</span>
+                </div>
+                <div class="question-help">Early multilingual cues.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Personal Scripture Experience -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">P</div>
+            <h2 class="section-title">Personal Scripture Experience</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Probe for last concrete instance.</strong><br>
+            If vague, ask: "Who was there? What happened next?"</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">3</span>
+              <div>
+                <div class="question-text">Think about the last time you heard or used the Bible in your own language. Tell me the story.
+                  <span class="question-id">pers_last</span>
+                </div>
+                <div class="question-help">Record time markers and participants.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">4</span>
+              <div>
+                <div class="question-text">If you go many days without hearing or reading it, what usually fills that space instead?
+                  <span class="question-id">pers_gap</span>
+                </div>
+                <div class="question-help">Substitute practices / other language.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">5</span>
+              <div>
+                <div class="question-text">A time it felt especially helpful or powerful—what made it so?
+                  <span class="question-id">pers_power</span>
+                </div>
+                <div class="question-help">Positive value signals.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">6</span>
+              <div>
+                <div class="question-text">A time you had access but chose not to use it—what was going on?
+                  <span class="question-id">pers_skip</span>
+                </div>
+                <div class="question-help">Potential barriers.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="page-break"></div>
+
+        <!-- Community & Church Use -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">C</div>
+            <h2 class="section-title">Community & Church Use</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Always ground in events respondent attended.</strong><br>
+            Avoid speculative "others" without story.</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">7</span>
+              <div>
+                <div class="question-text">In the church gatherings you attend, what languages show up in different parts? Tell me about last week.
+                  <span class="question-id">comm_gather</span>
+                </div>
+                <div class="question-help">Map functions to languages.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">8</span>
+              <div>
+                <div class="question-text">Outside formal services (funerals, weddings, youth), do you hear Scripture in your language? Recent example?
+                  <span class="question-id">comm_events</span>
+                </div>
+                <div class="question-help">Domain breadth.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">9</span>
+              <div>
+                <div class="question-text">Who most often brings out the local language Bible? Who almost never does?
+                  <span class="question-id">comm_people</span>
+                </div>
+                <div class="question-help">Roles & adoption patterns.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">10</span>
+              <div>
+                <div class="question-text">If a visitor asked how common local Scripture use is here, what story would you tell?
+                  <span class="question-id">comm_story</span>
+                </div>
+                <div class="question-help">Narrative prevalence statement.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Translation Experience -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">T</div>
+            <h2 class="section-title">Translation Experience</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Note exact problematic words/phrases.</strong><br>
+            Capture key term renderings verbatim.</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">11</span>
+              <div>
+                <div class="question-text">When you listen to a passage, what parts feel smooth and what parts feel strange? Examples?
+                  <span class="question-id">trans_natural</span>
+                </div>
+                <div class="question-help">Naturalness vs awkwardness.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">12</span>
+              <div>
+                <div class="question-text">Have you heard people complain or joke about the wording? What did they say?
+                  <span class="question-id">trans_comments</span>
+                </div>
+                <div class="question-help">Community attitudes.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">13</span>
+              <div>
+                <div class="question-text">(If reading) Describe what happens inside you when you read—where do you slow down?
+                  <span class="question-id">trans_read</span>
+                </div>
+                <div class="question-help">Processing friction.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">14</span>
+              <div>
+                <div class="question-text">(If not reading) If you wanted to read it, what would make that hard?
+                  <span class="question-id">trans_barrier</span>
+                </div>
+                <div class="question-help">Literacy/orthography barriers.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">15</span>
+              <div>
+                <div class="question-text">[Retell] After hearing a short passage, tell it back in your own words.
+                  <span class="question-id">trans_retell</span>
+                </div>
+                <div class="question-help">Assess comprehension—note omissions.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">16</span>
+              <div>
+                <div class="question-text">What do people say for King / Kingdom / Priest / Prophet / Salvation / Messiah? What does each mean to you?
+                  <span class="question-id">trans_terms</span>
+                </div>
+                <div class="question-help">Key term semantics.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">17</span>
+              <div>
+                <div class="question-text">People sometimes notice who worked on the translation. What kind of people do others say they were?
+                  <span class="question-id">trans_trust</span>
+                </div>
+                <div class="question-help">Trust / acceptance.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="page-break"></div>
+
+        <!-- Access & Engagement -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">SE</div>
+            <h2 class="section-title">Access & Engagement</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Check desire vs logistics.</strong><br>
+            Differentiate "not interested" from "no way to access".</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">18</span>
+              <div>
+                <div class="question-text">If someone today wanted to hear or read Scripture in your language, what could they practically do?
+                  <span class="question-id">eng_access</span>
+                </div>
+                <div class="question-help">Access pathways.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">19</span>
+              <div>
+                <div class="question-text">Which forms have you actually seen (print, audio, app, video, songs, drama)? Which used most?
+                  <span class="question-id">eng_forms</span>
+                </div>
+                <div class="question-help">Format availability vs use.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">20</span>
+              <div>
+                <div class="question-text">Tell me about the last time you saw someone get a copy. Easy or hard?
+                  <span class="question-id">eng_get</span>
+                </div>
+                <div class="question-help">Acquisition friction.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">21</span>
+              <div>
+                <div class="question-text">Are there people who would like it but don't have it? What gets in the way?
+                  <span class="question-id">eng_obstacles</span>
+                </div>
+                <div class="question-help">Barriers inventory.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">22</span>
+              <div>
+                <div class="question-text">If a young person wants Bible input, what do they reach for first? Why?
+                  <span class="question-id">eng_youth</span>
+                </div>
+                <div class="question-help">Youth behavior indicator.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">23</span>
+              <div>
+                <div class="question-text">Tell me what you know about (choose) Moses / David / Jeremiah / Jonah.
+                  <span class="question-id">eng_knowledge</span>
+                </div>
+                <div class="question-help">Narrative knowledge level.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">24</span>
+              <div>
+                <div class="question-text">Tell me about (choose) Passover / David & Goliath / Daniel & the Lions / Ruth.
+                  <span class="question-id">eng_events</span>
+                </div>
+                <div class="question-help">Event knowledge.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">25</span>
+              <div>
+                <div class="question-text">If you had more of something (teaching, audio, stories, training), what would help people use Scripture more?
+                  <span class="question-id">eng_help</span>
+                </div>
+                <div class="question-help">Perceived leverage points.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Spiritual Climate -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">S</div>
+            <h2 class="section-title">Spiritual Climate</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Listen for affect:</strong> curiosity, fear, indifference.<br>
+            Note social reaction scenarios.</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">26</span>
+              <div>
+                <div class="question-text">When people around you talk about knowing God, what feelings do they show? Recent example?
+                  <span class="question-id">spir_talk</span>
+                </div>
+                <div class="question-help">Affective tone.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">27</span>
+              <div>
+                <div class="question-text">If a neighbor wanted to follow Jesus more seriously, what reactions would they expect?
+                  <span class="question-id">spir_react</span>
+                </div>
+                <div class="question-help">Social cost.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">28</span>
+              <div>
+                <div class="question-text">Are there moments when people become more open (crisis, harvest, holidays)? Describe one.
+                  <span class="question-id">spir_moments</span>
+                </div>
+                <div class="question-help">Openness triggers.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">29</span>
+              <div>
+                <div class="question-text">Friends who used to be more spiritually hungry—what changed?
+                  <span class="question-id">spir_change</span>
+                </div>
+                <div class="question-help">Decline factors.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">30</span>
+              <div>
+                <div class="question-text">If someone new wanted guidance, how quickly could they find someone to walk with them?
+                  <span class="question-id">spir_guidance</span>
+                </div>
+                <div class="question-help">Mentor availability.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="page-break"></div>
+
+        <!-- Language Choices -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">M</div>
+            <h2 class="section-title">Language Choices (Multilingual)</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Map function → language → rationale.</strong><br>
+            Capture exclusion/inclusion patterns.</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">31</span>
+              <div>
+                <div class="question-text">In the last church meeting, list parts and what language each used.
+                  <span class="question-id">multi_parts</span>
+                </div>
+                <div class="question-help">Functional distribution.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">32</span>
+              <div>
+                <div class="question-text">Why do leaders choose those languages? What reasons do they give?
+                  <span class="question-id">multi_reasons</span>
+                </div>
+                <div class="question-help">Rationale depth.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">33</span>
+              <div>
+                <div class="question-text">When a passage is in another language, who seems left out?
+                  <span class="question-id">multi_leftout</span>
+                </div>
+                <div class="question-help">Impact of language choice.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">34</span>
+              <div>
+                <div class="question-text">If leaders wanted more impact among elders / youth / women, which language would help and why?
+                  <span class="question-id">multi_impact</span>
+                </div>
+                <div class="question-help">Strategic alternative.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">35</span>
+              <div>
+                <div class="question-text">Do leaders speak your local language well enough to use it naturally? Tell me about one leader.
+                  <span class="question-id">multi_proficiency</span>
+                </div>
+                <div class="question-help">Leader capability.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">36</span>
+              <div>
+                <div class="question-text">Have people discussed changing languages used? What happened?
+                  <span class="question-id">multi_change</span>
+                </div>
+                <div class="question-help">Change dynamics.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wrap-Up -->
+        <section class="section no-break">
+          <div class="section-header">
+            <div class="section-icon">✓</div>
+            <h2 class="section-title">Wrap-Up & Reflection</h2>
+          </div>
+          
+          <div class="callout">
+            <div class="callout-title">Section Strategy</div>
+            <p><strong>Prioritize single most impactful change.</strong><br>
+            Check for "everything fine" narrative.</p>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">37</span>
+              <div>
+                <div class="question-text">If you could change one thing tomorrow to help people use Scripture in your language more, what would it be?
+                  <span class="question-id">wrap_change</span>
+                </div>
+                <div class="question-help">Perceived leverage point.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">38</span>
+              <div>
+                <div class="question-text">Is there anything important we haven't talked about?
+                  <span class="question-id">wrap_missing</span>
+                </div>
+                <div class="question-help">Uncovered themes.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="question-header">
+              <span class="question-number">39</span>
+              <div>
+                <div class="question-text">Do some people feel no need for changes? Why might they feel everything is already fine?
+                  <span class="question-id">wrap_fine</span>
+                </div>
+                <div class="question-help">NI condition signals.</div>
+              </div>
+            </div>
+            <div class="question-body">
+              <div class="answer-area"></div>
+            </div>
+          </div>
+        </section>
+
+
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-logo">Scripture Impact Assessment Toolkit</div>
+        
+        <div class="footer-grid">
+          <div class="footer-item">
+            <strong>Copyright:</strong>
+            <span>NLCI/PBT</span>
+          </div>
+          <div class="footer-item">
+            <strong>Year:</strong>
+            <span>2025</span>
+          </div>
+        </div>
+        
+        <div class="footer-text" style="margin-top: 0.75rem;">
+          <strong style="color: #00ab82;">Adapted by:</strong> NLCI Research and Innovation Department
+        </div>
+        
+        <div class="footer-text" style="margin-top: 0.5rem; font-style: italic; opacity: 0.7;">
+          PDF version for offline distribution
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Add print button functionality
+    function printPDF() {
+      window.print();
+    }
+    
+    // Add keyboard shortcut for printing
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        printPDF();
+      }
+    });
+    
+    // Add print button to page
+    const printButton = document.createElement('button');
+    printButton.innerHTML = '🖨️ Print PDF';
+    printButton.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: #00ab82;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,171,130,0.3);
+    `;
+    printButton.onclick = printPDF;
+    document.body.appendChild(printButton);
+  </script>
+</body>
+</html>

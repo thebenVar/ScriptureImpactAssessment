@@ -1,0 +1,32 @@
+{
+  "name": "scripture-impact-assessment-survey",
+  "version": "1.0.0",
+  "description": "A comprehensive web-based survey tool designed to capture narrative evidence about how Scripture is accessed, used, and influences language communities.",
+  "main": "app/pages/index.html",
+  "scripts": {
+    "start": "open app/pages/index.html",
+    "serve": "python -m http.server 8000",
+    "pdf": "open app/pages/survey-pdf.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebenVar/ScriptureImpactAssessment.git"
+  },
+  "keywords": [
+    "survey",
+    "scripture",
+    "assessment",
+    "research",
+    "narrative",
+    "field-work",
+    "language-communities"
+  ],
+  "author": "CBASE",
+  "license": "MIT",
+  "homepage": "https://github.com/thebenVar/ScriptureImpactAssessment#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
