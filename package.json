@@ -2,11 +2,11 @@
   "name": "scripture-impact-assessment-survey",
   "version": "1.1.0",
   "description": "A comprehensive web-based survey tool designed to capture narrative evidence about how Scripture is accessed, used, and influences language communities.",
-  "main": "app/pages/index.html",
+  "main": "app/index.html",
   "scripts": {
-    "start": "open app/pages/index.html",
+    "start": "open app/index.html",
     "serve": "python -m http.server 8000",
-    "pdf": "open app/pages/survey-pdf.html"
+    "pdf": "open app/survey-pdf.html"
   },
   "repository": {
     "type": "git",

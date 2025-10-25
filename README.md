@@ -11,11 +11,11 @@ A comprehensive web-based survey tool for evaluating Scripture impact in languag
 ```
 ScriptureImpactAssessment/
 ├── � app/                     # Main Application
-│   ├── pages/                  # HTML Pages
-│   │   ├── index.html          # Main survey web application
-│   │   ├── login.html          # Authentication page
-│   │   ├── help.html           # Help and reference page
-│   │   └── coming-soon.html    # Coming soon placeholder
+│   ├── index.html              # Main survey web application
+│   ├── login.html              # Authentication page
+│   ├── help.html               # Help and reference page
+│   ├── coming-soon.html        # Coming soon placeholder
+│   ├── survey-pdf.html         # Offline PDF version
 │   ├── js/                     # JavaScript Files
 │   │   └── app.js              # Survey logic and functionality
 │   ├── css/                    # Stylesheets
@@ -37,12 +37,12 @@ ScriptureImpactAssessment/
 ## 🚀 Quick Start
 
 ### Web Application
-1. Open `app/pages/index.html` in a modern web browser
+1. Open `app/index.html` in a modern web browser
 2. Complete the authentication (if required)
 3. Use the interactive survey interface
 
 ### PDF Version (Offline)
-1. Navigate to `app/pages/survey-pdf.html`
+1. Navigate to `app/survey-pdf.html`
 2. Open in browser and use Ctrl+P to print/save as PDF
 3. Or use the pre-generated PDF file at `app/assets/Scripture Impact Assessment Survey - PDF Version.pdf`
 
@@ -182,7 +182,7 @@ This project is developed for NLCI/PBT research purposes. Please refer to organi
 #### Added
 - Complete web-based survey interface with 39 questions across 8 sections
 - Offline PDF version optimized for A4 printing with matrix coding
-- Professional project structure with organized folders (pages/, js/, css/, assets/)
+- Professional project structure with organized folders (js/, css/, assets/)
 - Interactive features: local storage, progress tracking, badge system
 - Comprehensive documentation and development log
 - Mobile-responsive design with Tailwind CSS

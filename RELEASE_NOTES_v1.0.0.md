@@ -33,13 +33,13 @@ A comprehensive web-based survey tool for evaluating Scripture impact in languag
 ## 🚀 Getting Started
 
 ### Web Application
-1. Open `app/pages/index.html` in a modern web browser
+1. Open `app/index.html` in a modern web browser
 2. Complete authentication if required
 3. Navigate through survey sections or jump to specific areas
 4. Responses automatically save to local storage
 
 ### PDF Version (Offline)
-1. Navigate to `app/pages/survey-pdf.html`
+1. Navigate to `app/survey-pdf.html`
 2. Print using Ctrl+P or use the pre-generated PDF at `app/assets/`
 3. Perfect for field interviews without internet connectivity
 
@@ -48,7 +48,7 @@ A comprehensive web-based survey tool for evaluating Scripture impact in languag
 ```
 ScriptureImpactAssessment/
 ├── 📂 app/                     # Main Application
-│   ├── pages/                  # HTML Pages (including PDF version)
+│   ├── *.html                  # HTML Pages (index, login, help, coming-soon, survey-pdf)
 │   ├── js/                     # JavaScript functionality
 │   ├── css/                    # Stylesheets
 │   └── assets/                 # Static resources (PDF, images)
